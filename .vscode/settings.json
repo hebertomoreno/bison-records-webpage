@@ -1,0 +1,21 @@
+{
+  // Format files on save
+  "editor.formatOnSave": true,
+
+  // Tell VS Code which formatter to use by default
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // (Optional) Ensure formatting for specific languages
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

@@ -1,0 +1,182 @@
+.sounds-page {
+  padding: 8rem 2rem 4rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.sounds-heading {
+  font-family: var(--font-cormorant);
+  font-size: 48px;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 1px;
+  margin-bottom: 3rem;
+  color: var(--foreground);
+}
+
+/* ── Track list ── */
+.sounds-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.sound-row {
+  display: grid;
+  grid-template-columns: 48px 1fr auto auto auto;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  transition: background 0.15s ease;
+}
+
+.sound-row:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.sound-row--active {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Play button */
+.sound-play {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid #000;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+  color: #000;
+}
+
+.sound-play:hover,
+.sound-row--active .sound-play {
+  background: #000;
+  color: #fff;
+}
+
+/* Track info */
+.sound-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sound-title {
+  font-family: var(--font-cormorant);
+  font-size: 20px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sound-row--active .sound-title {
+  color: #000;
+}
+
+.sound-artist {
+  font-family: var(--font-cormorant);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+/* Duration */
+.sound-duration {
+  font-family: var(--font-cormorant);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: rgba(0, 0, 0, 0.4);
+  min-width: 40px;
+  text-align: right;
+}
+
+/* Action buttons */
+.sound-action {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+.sound-action:hover {
+  color: #000;
+}
+
+/* Progress bar (shown on active row) */
+.sound-progress-wrap {
+  grid-column: 2 / -1;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: -0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.sound-progress-fill {
+  height: 100%;
+  background: #000;
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+/* Toast */
+.sound-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: #000;
+  color: #fff;
+  font-family: var(--font-cormorant);
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  padding: 10px 24px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.sound-toast--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+@media (max-width: 600px) {
+  .sounds-page {
+    padding: 6rem 1rem 3rem;
+  }
+
+  .sound-row {
+    grid-template-columns: 40px 1fr auto auto;
+    gap: 0.75rem;
+  }
+
+  .sound-duration {
+    display: none;
+  }
+
+  .sound-title {
+    font-size: 18px;
+  }
+}
