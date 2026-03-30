@@ -14,7 +14,7 @@ export const translations = {
     sounds: {
       heading: "Sounds",
       description:
-        "Here, you'll find sounds recorded by the Bison Records team, and friends. They are free for download and use in your projects.",
+        "Sounds recorded by the Bison Records team, and friends. They are free for download and use in your projects.",
     },
     videos: {
       heading: "Videos",

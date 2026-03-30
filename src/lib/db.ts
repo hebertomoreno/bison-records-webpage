@@ -7,43 +7,11 @@ let _db: Database.Database | null = null;
 
 function getDb(): Database.Database {
   if (!_db) {
-    _db = new Database(DB_PATH);
-    _db.pragma("journal_mode = WAL");
-    initSchema(_db);
+    // Read-only: works on Vercel's read-only filesystem.
+    // All schema changes and data writes go through scripts/seed.mjs locally.
+    _db = new Database(DB_PATH, { readonly: true });
   }
   return _db;
-}
-
-function initSchema(db: Database.Database) {
-  // Add release_type column to existing databases if missing
-  const cols = db.prepare("PRAGMA table_info(releases)").all() as { name: string }[];
-  if (cols.length > 0 && !cols.find((c) => c.name === "release_type")) {
-    db.exec(`ALTER TABLE releases ADD COLUMN release_type TEXT NOT NULL DEFAULT 'Album'`);
-  }
-
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS releases (
-      id            INTEGER PRIMARY KEY AUTOINCREMENT,
-      artist        TEXT    NOT NULL,
-      title         TEXT    NOT NULL,
-      date          TEXT    NOT NULL,
-      image         TEXT    NOT NULL,
-      href          TEXT    NOT NULL,
-      type          TEXT    NOT NULL CHECK(type IN ('upcoming', 'recent')),
-      release_type  TEXT    NOT NULL DEFAULT 'Album' CHECK(release_type IN ('Album', 'Single', 'EP')),
-      sort_order    INTEGER NOT NULL DEFAULT 0
-    );
-
-    CREATE TABLE IF NOT EXISTS tracks (
-      id          TEXT PRIMARY KEY,
-      title       TEXT NOT NULL,
-      artist      TEXT,
-      description TEXT,
-      duration    TEXT,
-      recorded_at TEXT,
-      file        TEXT NOT NULL UNIQUE
-    );
-  `);
 }
 
 // ── Releases ────────────────────────────────────────────────────────
