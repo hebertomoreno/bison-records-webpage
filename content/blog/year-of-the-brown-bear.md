@@ -1,28 +1,11 @@
 ---
-title: "Year Of The Brown Bear — A Note From Nikolas"
+title: "Clench"
 date: "2026-03-10"
 author: "Nikolas Murdock"
-excerpt: "Some thoughts on making the record, the cabin, and why I named it after a bear I never actually saw."
 ---
 
-I spent most of October in a cabin outside Portland with a borrowed reel-to-reel and a thermos that leaked.
+The walls close down and I clench clench clench the hand and the hand clenches back. The hand clenches back and I feel the texture of its skin against my neck and the nape of my neck and my back and my shoulders and do I feel warmth? No. No, I feel rough textures and my skin feels warm like it was burnt. i try to breathe slowly but the hand it has a finger against my chest and the fact that it’s feeling my respirations makes me uneasy and I tend to breathe worse. I breathe worse and worse and I feel like I’ve had the fly for days, in hours. The hand has its pinky on my knees and its ring finger on my penis and it doesn’t know, does it? Does it know that this is pleasure and pain and uncertainty all at once? That the emotions are rushing through faster than I can count them and am I hungry and am I alone? I’m definitely not alone as it feels like a towel.
 
-The record started as something else — a collection of songs about cities, actually. But something kept pulling me toward the woods. Not metaphorically. Literally. I'd finish a take and just walk outside into the trees for an hour.
+The hand lowers and it’s holding me like it would a Barbie doll but my body is not as rigid as a dolls and so I tumble down, my body folds in an unnatural fashion and my face makes contact with the hand. My hands are free but my force escapes me and I don’t get to fight back right now. i don’t get to escape. I am only here to experience the moment.
 
-The bear showed up in my notebook before it showed up anywhere else. A brown bear is patient in a way I find humbling. It doesn't rush the season. It doesn't perform urgency.
-
-I wanted the album to feel like that. Like something that had been waiting for the right time.
-
----
-
-The recording process was deliberately slow. One song a day, sometimes less. I'd track a guitar part and leave it overnight before deciding whether to keep it. Silence started to feel like a collaborator.
-
-There's a line in the last track — *"I mistook the quiet for emptiness"* — that came to me on one of those walks. I wrote it on my hand because I didn't have paper.
-
----
-
-The album comes out November 5th. I chose the date mostly because I love *V for Vendetta*, which I'm aware is a strange reason. But all the best reasons are strange.
-
-Thanks for listening.
-
-— N
+The hand has set me down on the floor, its fingers testing my legs and extremities for signs of life. It pulls my leg up and lets it drop to the floor. The base of my foot impacts the floor with a loud thud. It hurt. Less carefully, it raises my other leg.
