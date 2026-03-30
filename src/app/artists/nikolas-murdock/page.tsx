@@ -2,10 +2,16 @@ import "../../../styles/nikolas-murdock.css";
 import { getArtistAlbums, type SpotifyAlbum } from "../../../lib/spotify";
 import { getAppleMusicUrls } from "../../../lib/apple-music";
 import { getArtistEvents, formatEventDate, type BandsintownEvent } from "../../../lib/bandsintown";
+import { getLocale } from "../../../lib/locale";
+import { t } from "../../../lib/translations";
+import NikolasHero from "../../../components/NikolasHero";
 
 const videoIds = ["dQw4w9WgXcQ", "eY52Zsg-KVI"];
 
 export default async function NikolasMurdockPage() {
+  const locale = await getLocale();
+  const tr = t(locale).nikolas;
+
   let albums: SpotifyAlbum[] = [];
   let events: BandsintownEvent[] = [];
   let appleMusicUrls: Record<string, string | null> = {};
@@ -27,24 +33,14 @@ export default async function NikolasMurdockPage() {
     <div className="nm-page">
 
       {/* ── Hero ── */}
-      <section
-        id="hero"
-        className="nm-hero"
-        style={{ backgroundImage: "url(/media/images/NikolasMurdockImage.jpg)" }}
-      >
-        <div className="nm-hero__content">
-          <h1 className="nm-hero__name">Nikolas Murdock</h1>
-          <p className="nm-hero__release">Year Of The Brown Bear — Out Now</p>
-          <a href="#music" className="nm-hero__cta">Listen Now</a>
-        </div>
-      </section>
+      <NikolasHero release={tr.hero.release} cta={tr.hero.cta} />
 
       <div className="nm-divider" />
 
       {/* ── Music ── */}
       <section id="music">
         <div className="nm-section">
-          <h2 className="nm-section__title">Music</h2>
+          <h2 className="nm-section__title">{tr.sections.music}</h2>
           {albums.length > 0 ? (
             <div className="nm-music-grid">
               {albums.map((album) => (
@@ -73,7 +69,7 @@ export default async function NikolasMurdockPage() {
               ))}
             </div>
           ) : (
-            <p className="nm-music-empty">Music coming soon.</p>
+            <p className="nm-music-empty">{tr.music.empty}</p>
           )}
         </div>
       </section>
@@ -83,21 +79,18 @@ export default async function NikolasMurdockPage() {
       {/* ── About ── */}
       <section id="about">
         <div className="nm-section">
-          <h2 className="nm-section__title">About</h2>
+          <h2 className="nm-section__title">{tr.sections.about}</h2>
           <div className="nm-about-inner">
             <img
               src="/media/images/NikolasMurdockImage.jpg"
               alt="Nikolas Murdock"
               className="nm-about__photo"
             />
-            <p className="nm-about__bio">
-              Nikolas Murdock is a singer-songwriter whose music draws from the
-              quiet power of the natural world. His debut album,{" "}
-              <em>Year Of The Brown Bear</em>, is a meditation on solitude,
-              seasons, and the patience of wild things. Recorded live to tape in
-              a cabin outside Portland, Oregon, the record captures something
-              rare — a voice completely at home in the silence between notes.
-            </p>
+            <div className="nm-about__bio">
+              {tr.about.bio.split("\n\n").map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -107,7 +100,7 @@ export default async function NikolasMurdockPage() {
       {/* ── Shows ── */}
       <section id="shows">
         <div className="nm-section">
-          <h2 className="nm-section__title">Shows</h2>
+          <h2 className="nm-section__title">{tr.sections.shows}</h2>
           {events.length > 0 ? (
             <div className="nm-shows-list">
               {events.map((event) => {
@@ -121,7 +114,7 @@ export default async function NikolasMurdockPage() {
                     </span>
                     {ticket && (
                       <a href={ticket.url} target="_blank" rel="noopener noreferrer" className="nm-show__ticket">
-                        {ticket.status === "sold_out" ? "Sold Out" : "Tickets"}
+                        {ticket.status === "sold_out" ? tr.shows.soldOut : tr.shows.tickets}
                       </a>
                     )}
                   </div>
@@ -129,7 +122,7 @@ export default async function NikolasMurdockPage() {
               })}
             </div>
           ) : (
-            <p className="nm-music-empty">No upcoming shows.</p>
+            <p className="nm-music-empty">{tr.shows.empty}</p>
           )}
         </div>
       </section>
@@ -139,7 +132,7 @@ export default async function NikolasMurdockPage() {
       {/* ── Videos ── */}
       <section id="videos">
         <div className="nm-section">
-          <h2 className="nm-section__title">Videos</h2>
+          <h2 className="nm-section__title">{tr.sections.videos}</h2>
           <div className="nm-videos-grid">
             {videoIds.map((id) => (
               <iframe
@@ -158,12 +151,9 @@ export default async function NikolasMurdockPage() {
       {/* ── Contact ── */}
       <section id="contact">
         <div className="nm-section">
-          <h2 className="nm-section__title">Contact</h2>
+          <h2 className="nm-section__title">{tr.sections.contact}</h2>
           <div className="nm-contact-inner">
-            <p className="nm-contact__text">
-              For booking, press inquiries, or general correspondence, reach out
-              directly.
-            </p>
+            <p className="nm-contact__text">{tr.contact.text}</p>
             <a href="mailto:booking@nikolasmurdock.com" className="nm-contact__email">
               booking@nikolasmurdock.com
             </a>

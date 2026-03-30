@@ -5,27 +5,23 @@ import "../styles/navbar.css";
 import Link from "next/link";
 import Image from "next/image";
 import { FiMenu, FiX } from "react-icons/fi";
+import LanguageSwitcher from "./LanguageSwitcher";
 
-export default function Navbar() {
+interface NavItem {
+  key: string;
+  label: string;
+}
+
+export default function Navbar({ items }: { items: NavItem[] }) {
   const [open, setOpen] = useState(false);
-  const items = [
-    "artists",
-    "videos",
-    "sounds",
-    // "music",
-    // "events",
-    "blog",
-    "press",
-    "contact",
-  ];
 
   return (
-    <header className="desktop-menu fixed top-0 w-full bg-white shadow z-50">
-      <div className="max-w-4xl mx-auto flex items-center justify-between p-4">
+    <header className="desktop-menu sticky top-0 z-50">
+      <div className="navbar-inner flex items-center justify-between p-4">
         <Link href="/">
           <Image
             src="/media/images/RecordsLogo.png"
-            alt="MySite logo"
+            alt="Bison Records"
             width={238}
             height={82}
           />
@@ -36,12 +32,15 @@ export default function Navbar() {
         <nav className={`nav-dropdown ${open ? "nav-dropdown--open" : ""}`}>
           <ul className="menu-item flex flex-col md:flex-row">
             {items.map((item) => (
-              <li key={item} className="p-4 hover:red">
-                <Link href={`/${item}`} onClick={() => setOpen(false)}>
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
+              <li key={item.key} className="p-4">
+                <Link href={`/${item.key}`} onClick={() => setOpen(false)}>
+                  {item.label}
                 </Link>
               </li>
             ))}
+            <li className="p-4">
+              <LanguageSwitcher />
+            </li>
           </ul>
         </nav>
       </div>

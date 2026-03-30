@@ -1,25 +1,36 @@
-.hero-container {
+/* ── Carousel wrapper ── */
+.hero-carousel {
   position: relative;
-  display: flex;
-  width: 70%;
+  width: 100%;
   height: 100%;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-  background: url(/media/images/forest.JPG);
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* ── Slides ── */
+.hero-slide {
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  margin: 0 auto;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  pointer-events: none;
 }
 
-.hero-container::before {
-  content: "";
+.hero-slide--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero-slide__overlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
 }
 
+/* ── Content ── */
 .hero-content {
   position: absolute;
   top: 50%;
@@ -29,6 +40,7 @@
   color: white;
   padding: 0 1rem;
   z-index: 1;
+  width: 90%;
 }
 
 .hero-title {
@@ -78,6 +90,7 @@
   margin-bottom: 48px;
 }
 
+/* ── Buttons ── */
 .black-button {
   display: flex;
   padding: 12px 24px;
@@ -93,6 +106,7 @@
   text-transform: uppercase;
   color: white;
   transition: background 0.2s ease;
+  text-decoration: none;
 }
 
 .black-button:hover {
@@ -107,11 +121,63 @@
   align-items: center;
 }
 
-@media (max-width: 390px) {
-  .hero-container {
-    width: 100%;
-  }
+/* ── Arrows ── */
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 0;
+}
 
+.hero-arrow:hover {
+  color: #fff;
+}
+
+.hero-arrow--prev { left: 1.25rem; }
+.hero-arrow--next { right: 1.25rem; }
+
+/* ── Dot navigation ── */
+.hero-dots {
+  position: absolute;
+  bottom: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.6rem;
+  z-index: 2;
+}
+
+.hero-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.hero-dot:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.hero-dot--active {
+  background: #fff;
+  transform: scale(1.25);
+}
+
+/* ── Mobile ── */
+@media (max-width: 390px) {
   .hero-title {
     font-size: 36px;
     margin-bottom: 10px;

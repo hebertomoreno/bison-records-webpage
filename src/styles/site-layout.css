@@ -1,0 +1,17 @@
+/* ── Shared site layout ──
+   Used by every page that wants: navbar takes its own space,
+   main fills the rest, scrollable content below the fold.
+── */
+
+.site-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.site-layout > main {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}

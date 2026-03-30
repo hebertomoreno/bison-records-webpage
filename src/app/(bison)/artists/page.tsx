@@ -1,5 +1,7 @@
 import Link from "next/link";
 import "../../../styles/artists.css";
+import { getLocale } from "../../../lib/locale";
+import { t } from "../../../lib/translations";
 
 const artists = [
   {
@@ -9,10 +11,12 @@ const artists = [
   },
 ];
 
-export default function ArtistsPage() {
+export default async function ArtistsPage() {
+  const locale = await getLocale();
+  const tr = t(locale);
   return (
     <div className="artists-page">
-      <h1 className="artists-heading">Artists</h1>
+      <h1 className="artists-heading">{tr.artists.heading}</h1>
       <div className="artists-grid">
         {artists.map((artist) => (
           <Link

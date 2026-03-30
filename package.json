@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "scan-audio": "node scripts/scan-audio.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
@@ -27,7 +30,10 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.4.1",
+    "eslint-config-prettier": "^10.1.8",
+    "music-metadata": "^11.12.3",
     "postcss": "^8.5.6",
+    "prettier": "^3.8.1",
     "tailwindcss": "^4.1.11",
     "typescript": "^5"
   }

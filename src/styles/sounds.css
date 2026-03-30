@@ -14,6 +14,16 @@
   color: var(--foreground);
 }
 
+.sounds-description {
+  font-family: var(--font-cormorant);
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+  color: color-mix(in srgb, var(--foreground) 55%, transparent);
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+}
+
 /* ── Track list ── */
 .sounds-list {
   display: flex;
@@ -22,20 +32,20 @@
 
 .sound-row {
   display: grid;
-  grid-template-columns: 48px 1fr auto auto auto;
+  grid-template-columns: 48px 1fr auto auto auto auto;
   align-items: center;
   gap: 1.25rem;
   padding: 1.1rem 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
   transition: background 0.15s ease;
 }
 
 .sound-row:first-child {
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
 }
 
 .sound-row--active {
-  background: rgba(0, 0, 0, 0.03);
+  background: color-mix(in srgb, var(--foreground) 3%, transparent);
 }
 
 /* Play button */
@@ -43,7 +53,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1.5px solid #000;
+  border: 1.5px solid var(--foreground);
   background: none;
   display: flex;
   align-items: center;
@@ -51,12 +61,13 @@
   cursor: pointer;
   transition: background 0.2s ease, color 0.2s ease;
   flex-shrink: 0;
-  color: #000;
+  padding-left: 2px; /* optical centering for play triangle */
+  color: var(--foreground);
 }
 
 .sound-play:hover,
 .sound-row--active .sound-play {
-  background: #000;
+  background: var(--foreground);
   color: #fff;
 }
 
@@ -80,7 +91,31 @@
 }
 
 .sound-row--active .sound-title {
-  color: #000;
+  color: var(--foreground);
+}
+
+.sound-description {
+  font-family: var(--font-cormorant);
+  font-size: 13px;
+  font-weight: 400;
+  font-style: italic;
+  color: color-mix(in srgb, var(--foreground) 50%, transparent);
+  margin-top: 2px;
+}
+
+.sound-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.sound-recorded {
+  font-family: var(--font-cormorant);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: color-mix(in srgb, var(--foreground) 40%, transparent);
 }
 
 .sound-artist {
@@ -89,7 +124,7 @@
   font-weight: 400;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.45);
+  color: color-mix(in srgb, var(--foreground) 45%, transparent);
 }
 
 /* Duration */
@@ -98,7 +133,7 @@
   font-size: 15px;
   font-weight: 400;
   letter-spacing: 1px;
-  color: rgba(0, 0, 0, 0.4);
+  color: color-mix(in srgb, var(--foreground) 40%, transparent);
   min-width: 40px;
   text-align: right;
 }
@@ -108,7 +143,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.35);
+  color: color-mix(in srgb, var(--foreground) 35%, transparent);
   display: flex;
   align-items: center;
   padding: 4px;
@@ -117,14 +152,14 @@
 }
 
 .sound-action:hover {
-  color: #000;
+  color: var(--foreground);
 }
 
 /* Progress bar (shown on active row) */
 .sound-progress-wrap {
   grid-column: 2 / -1;
   height: 2px;
-  background: rgba(0, 0, 0, 0.1);
+  background: color-mix(in srgb, var(--foreground) 10%, transparent);
   border-radius: 2px;
   cursor: pointer;
   margin-top: -0.5rem;
@@ -133,7 +168,7 @@
 
 .sound-progress-fill {
   height: 100%;
-  background: #000;
+  background: var(--foreground);
   border-radius: 2px;
   transition: width 0.1s linear;
 }
@@ -144,7 +179,7 @@
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%) translateY(12px);
-  background: #000;
+  background: var(--foreground);
   color: #fff;
   font-family: var(--font-cormorant);
   font-size: 15px;

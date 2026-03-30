@@ -1,13 +1,17 @@
 import Link from "next/link";
 import { getAllPosts } from "../../../lib/blog";
 import "../../../styles/blog.css";
+import { getLocale } from "../../../lib/locale";
+import { t } from "../../../lib/translations";
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const locale = await getLocale();
+  const tr = t(locale);
   const posts = getAllPosts();
 
   return (
     <div className="blog-page">
-      <h1 className="blog-heading">Blog</h1>
+      <h1 className="blog-heading">{tr.blog.heading}</h1>
       <div className="blog-list">
         {posts.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`} className="blog-entry">

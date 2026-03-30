@@ -1,6 +1,19 @@
 .desktop-menu {
+  position: sticky;
+  top: 0;
   background: black;
   width: 100%;
+  z-index: 50;
+}
+
+.navbar-inner {
+  width: 70%;
+  margin: 0 auto;
+  min-height: 114px;
+}
+
+.menu-item li {
+  white-space: nowrap;
 }
 
 .menu-item {

@@ -1,35 +1,16 @@
-import SoundsClient, { type Track } from "../../../components/SoundsClient";
+import SoundsClient from "../../../components/SoundsClient";
 import "../../../styles/sounds.css";
+import { getLocale } from "../../../lib/locale";
+import { t } from "../../../lib/translations";
+import { tracks } from "../../../data/tracks";
 
-// Add your tracks here — drop audio files into /public/media/audio/
-const tracks: Track[] = [
-  {
-    id: "year-of-the-brown-bear",
-    title: "Year Of The Brown Bear",
-    artist: "Nikolas Murdock",
-    duration: "4:12",
-    file: "/media/audio/year-of-the-brown-bear.mp3",
-  },
-  {
-    id: "november-fifth",
-    title: "November Fifth",
-    artist: "Nikolas Murdock",
-    duration: "3:47",
-    file: "/media/audio/november-fifth.mp3",
-  },
-  {
-    id: "v-for-vendetta",
-    title: "V For Vendetta",
-    artist: "Nikolas Murdock",
-    duration: "5:03",
-    file: "/media/audio/v-for-vendetta.mp3",
-  },
-];
-
-export default function SoundsPage() {
+export default async function SoundsPage() {
+  const locale = await getLocale();
+  const tr = t(locale);
   return (
     <div className="sounds-page">
-      <h1 className="sounds-heading">Sounds</h1>
+      <h1 className="sounds-heading">{tr.sounds.heading}</h1>
+      <p className="sounds-description">{tr.sounds.description}</p>
       <SoundsClient tracks={tracks} />
     </div>
   );

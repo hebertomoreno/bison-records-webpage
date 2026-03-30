@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getPost, getAllPosts } from "../../../../lib/blog";
 import "../../../../styles/blog.css";
+import { getLocale } from "../../../../lib/locale";
+import { t } from "../../../../lib/translations";
 
 export async function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
@@ -8,11 +10,12 @@ export async function generateStaticParams() {
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = await getPost(slug);
+  const [post, locale] = await Promise.all([getPost(slug), getLocale()]);
+  const tr = t(locale);
 
   return (
     <div className="blog-post">
-      <Link href="/blog" className="blog-post__back">← All Posts</Link>
+      <Link href="/blog" className="blog-post__back">{tr.blog.back}</Link>
       <div className="blog-post__meta">
         <span>{new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
         {post.author && <span>{post.author}</span>}

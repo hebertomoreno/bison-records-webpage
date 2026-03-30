@@ -8,7 +8,9 @@ export interface Track {
   id: string;
   title: string;
   artist: string;
-  duration: string;
+  description: string;
+  duration: string | null;
+  recordedAt: string | null;
   file: string;
 }
 
@@ -94,9 +96,19 @@ export default function SoundsClient({ tracks }: { tracks: Track[] }) {
               <div className="sound-info">
                 <span className="sound-title">{track.title}</span>
                 <span className="sound-artist">{track.artist}</span>
+                {track.description && (
+                  <span className="sound-description">{track.description}</span>
+                )}
               </div>
 
-              <span className="sound-duration">{track.duration}</span>
+              <div className="sound-meta">
+                {track.recordedAt && (
+                  <span className="sound-recorded">{track.recordedAt}</span>
+                )}
+                {track.duration && (
+                  <span className="sound-duration">{track.duration}</span>
+                )}
+              </div>
 
               <button className="sound-action" onClick={() => share(track)} aria-label="Share">
                 <FiShare2 size={17} />
