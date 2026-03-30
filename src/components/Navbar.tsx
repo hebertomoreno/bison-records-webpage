@@ -18,7 +18,7 @@ export default function Navbar({ items }: { items: NavItem[] }) {
   return (
     <header className="desktop-menu sticky top-0 z-50">
       <div className="navbar-inner flex items-center justify-between p-4">
-        <Link href="/">
+        <Link href="/" className="navbar-logo">
           <Image
             src="/media/images/RecordsLogo.png"
             alt="Bison Records"

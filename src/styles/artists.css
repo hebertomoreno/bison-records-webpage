@@ -61,9 +61,20 @@
   color: #fff;
 }
 
+@media (max-width: 767px) {
+  .artists-page {
+    padding: 2.5rem 1rem 2rem;
+  }
+
+  .artists-heading {
+    font-size: 36px;
+    margin-bottom: 1.5rem;
+  }
+}
+
 @media (max-width: 390px) {
   .artists-page {
-    padding: 5rem 1rem 1rem;
+    padding: 2rem 1rem 1rem;
   }
 
   .artists-heading {

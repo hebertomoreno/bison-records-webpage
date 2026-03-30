@@ -1,4 +1,5 @@
 import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 import { getLocale } from "../../lib/locale";
 import { t } from "../../lib/translations";
 import "../../styles/site-layout.css";
@@ -23,7 +24,10 @@ export default async function BisonLayout({
   return (
     <div className="site-layout">
       <Navbar items={items} />
-      <main>{children}</main>
+      <main>
+        {children}
+        <Footer />
+      </main>
     </div>
   );
 }

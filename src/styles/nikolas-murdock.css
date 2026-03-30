@@ -510,25 +510,30 @@
 /* Mobile */
 @media (max-width: 767px) {
   .nm-hero__name {
-    font-size: 48px;
+    font-size: 44px;
   }
 
   .nm-hero__release {
-    font-size: 16px;
+    font-size: 15px;
     letter-spacing: 2px;
   }
 
   .nm-section {
-    padding: 4rem 1.25rem;
+    padding: 3.5rem 1.25rem;
   }
 
   .nm-section__title {
-    font-size: 36px;
+    font-size: 32px;
+    margin-bottom: 2rem;
   }
 
   .nm-about-inner {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .nm-about__bio {
+    font-size: 18px;
   }
 
   .nm-show {
@@ -540,7 +545,22 @@
     align-self: flex-start;
   }
 
+  /* Force single-column video grid — minmax(400px) overflows narrow screens */
   .nm-videos-grid {
     grid-template-columns: 1fr;
+  }
+
+  .nm-contact__text {
+    font-size: 17px;
+  }
+
+  .nm-contact__email {
+    font-size: 15px;
+    word-break: break-all;
+  }
+
+  .nm-music-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
   }
 }
