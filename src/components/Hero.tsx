@@ -17,7 +17,7 @@ interface Slide {
 // ── Add or edit slides here ──────────────────────────────────────
 const slides: Slide[] = [
   {
-    video: "/media/video/Hero1.MP4",
+    video: "/media/video/hero1",
     title: "Bison Records",
     subtitle: "Ars sola est digna occupatio",
     tagline: "Since 2014",
@@ -68,12 +68,14 @@ export default function Hero() {
           {slide.video && (
             <video
               className="hero-slide__video"
-              src={slide.video}
               autoPlay
               muted
               loop
               playsInline
-            />
+            >
+              <source src={slide.video.replace(/\.[^.]+$/, ".webm")} type="video/webm" />
+              <source src={slide.video.replace(/\.[^.]+$/, "-opt.mp4")} type="video/mp4" />
+            </video>
           )}
           <div className="hero-slide__overlay" />
           <div className="hero-content">
