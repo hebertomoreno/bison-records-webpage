@@ -13,6 +13,7 @@
 
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
+import Link from "next/link";
 import "../../../styles/site-layout.css";
 import "../../../styles/artist-template.css";
 
@@ -31,7 +32,7 @@ function ArtistNavbar() {
     <header className="at-nav">
       <div className="at-nav__inner">
         <div className="at-nav__brand-group">
-          <a href="/" className="at-nav__label">Bison Records</a>
+          <Link href="/" className="at-nav__label">Bison Records</Link>
           <a href="#hero" className="at-nav__brand">Artist Name</a>
         </div>
         <button className="at-nav__toggle" onClick={() => setOpen((o) => !o)}>

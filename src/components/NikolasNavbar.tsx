@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
+import Link from "next/link";
 import "../styles/nikolas-murdock.css";
 import LanguageSwitcher from "./LanguageSwitcher";
 
@@ -17,7 +18,7 @@ export default function NikolasNavbar({ items }: { items: NavItem[] }) {
     <header className="nm-nav">
       <div className="nm-nav__inner">
         <div className="nm-nav__brand-group">
-          <a href="/" className="nm-nav__label">Bison Records</a>
+          <Link href="/" className="nm-nav__label">Bison Records</Link>
           <a href="#hero" className="nm-nav__brand">Nikolas Murdock</a>
         </div>
         <button className="nm-nav__toggle" onClick={() => setOpen((o) => !o)}>
