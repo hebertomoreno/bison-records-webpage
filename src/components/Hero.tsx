@@ -73,8 +73,8 @@ export default function Hero() {
               loop
               playsInline
             >
-              <source src={slide.video.replace(/\.[^.]+$/, ".webm")} type="video/webm" />
-              <source src={slide.video.replace(/\.[^.]+$/, "-opt.mp4")} type="video/mp4" />
+              <source src={`${slide.video}.webm`} type="video/webm" />
+              <source src={`${slide.video}-opt.mp4`} type="video/mp4" />
             </video>
           )}
           <div className="hero-slide__overlay" />
