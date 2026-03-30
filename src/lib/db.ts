@@ -1,59 +1,20 @@
-import Database from "better-sqlite3";
-import path from "path";
+// Data is stored in src/data/*.ts files — edit those directly or use scripts.
+// This module keeps a stable import API for the rest of the app.
 
-const DB_PATH = path.join(process.cwd(), "bison.db");
+import { upcomingReleases, recentReleases, type Release } from "../data/releases";
+import { tracks, type Track } from "../data/tracks";
 
-let _db: Database.Database | null = null;
-
-function getDb(): Database.Database {
-  if (!_db) {
-    // Read-only: works on Vercel's read-only filesystem.
-    // All schema changes and data writes go through scripts/seed.mjs locally.
-    _db = new Database(DB_PATH, { readonly: true });
-  }
-  return _db;
-}
-
-// ── Releases ────────────────────────────────────────────────────────
-
-export interface ReleaseRow {
-  id: number;
-  artist: string;
-  title: string;
-  date: string;
-  image: string;
-  href: string;
-  type: "upcoming" | "recent";
-  release_type: "Album" | "Single" | "EP";
-  sort_order: number;
-}
+export type ReleaseRow = Release & { id: number; type: "upcoming" | "recent"; sort_order: number };
+export type TrackRow = Omit<Track, "recordedAt"> & { recorded_at: string | null };
 
 export function getUpcomingReleases(): ReleaseRow[] {
-  return getDb()
-    .prepare(`SELECT * FROM releases WHERE type = 'upcoming' ORDER BY sort_order ASC`)
-    .all() as ReleaseRow[];
+  return upcomingReleases.map((r, i) => ({ ...r, id: i + 1, type: "upcoming" as const, sort_order: i }));
 }
 
 export function getRecentReleases(): ReleaseRow[] {
-  return getDb()
-    .prepare(`SELECT * FROM releases WHERE type = 'recent' ORDER BY sort_order ASC`)
-    .all() as ReleaseRow[];
-}
-
-// ── Tracks ──────────────────────────────────────────────────────────
-
-export interface TrackRow {
-  id: string;
-  title: string;
-  artist: string | null;
-  description: string | null;
-  duration: string | null;
-  recorded_at: string | null;
-  file: string;
+  return recentReleases.map((r, i) => ({ ...r, id: i + 1, type: "recent" as const, sort_order: i }));
 }
 
 export function getTracks(): TrackRow[] {
-  return getDb()
-    .prepare(`SELECT * FROM tracks ORDER BY rowid ASC`)
-    .all() as TrackRow[];
+  return tracks.map((t) => ({ ...t, recorded_at: t.recordedAt }));
 }

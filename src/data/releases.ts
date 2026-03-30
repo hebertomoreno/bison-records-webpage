@@ -4,7 +4,10 @@ export interface Release {
   date: string;
   image: string;
   href: string;
+  release_type: "Album" | "Single" | "EP";
 }
+
+// ── Edit releases here ───────────────────────────────────────────────
 
 export const upcomingReleases: Release[] = [
   {
@@ -13,6 +16,7 @@ export const upcomingReleases: Release[] = [
     date: "May 5, 2026",
     image: "/media/images/bear2.jpg",
     href: "/artists/nikolas-murdock",
+    release_type: "Single",
   },
   {
     artist: "Nikolas Murdock",
@@ -20,6 +24,7 @@ export const upcomingReleases: Release[] = [
     date: "June 1, 2026",
     image: "/media/images/bear3.jpg",
     href: "/artists/nikolas-murdock",
+    release_type: "EP",
   },
   {
     artist: "Nikolas Murdock",
@@ -27,6 +32,7 @@ export const upcomingReleases: Release[] = [
     date: "November 2026",
     image: "/media/images/bear1.jpg",
     href: "/artists/nikolas-murdock",
+    release_type: "Album",
   },
 ];
 

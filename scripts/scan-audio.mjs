@@ -1,45 +1,19 @@
 /**
- * Scans public/media/audio/ and upserts track metadata into bison.db.
+ * Scans public/media/audio/ and writes src/data/tracks.ts
  * Run with: npm run scan-audio
  *
- * New files are inserted. Existing files update metadata from tags
- * but preserve any title/artist/description you've manually edited.
+ * New files are inserted. Existing entries preserve manually edited fields.
  */
 
 import { parseFile } from "music-metadata";
-import Database from "better-sqlite3";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const AUDIO_DIR = path.join(__dirname, "../public/media/audio");
-const DB_PATH = path.join(__dirname, "../bison.db");
-
+const OUT_FILE = path.join(__dirname, "../src/data/tracks.ts");
 const EXTS = [".mp3", ".wav", ".flac", ".aac", ".ogg", ".m4a"];
-
-const db = new Database(DB_PATH);
-db.pragma("journal_mode = WAL");
-
-db.exec(`
-  CREATE TABLE IF NOT EXISTS tracks (
-    id          TEXT PRIMARY KEY,
-    title       TEXT NOT NULL,
-    artist      TEXT,
-    description TEXT,
-    duration    TEXT,
-    recorded_at TEXT,
-    file        TEXT NOT NULL UNIQUE
-  );
-`);
-
-const insert = db.prepare(`
-  INSERT INTO tracks (id, title, artist, description, duration, recorded_at, file)
-  VALUES (@id, @title, @artist, @description, @duration, @recorded_at, @file)
-  ON CONFLICT(file) DO UPDATE SET
-    duration    = excluded.duration,
-    recorded_at = excluded.recorded_at
-`);
 
 function slugify(str) {
   return str.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-").replace(/^-|-$/g, "");
@@ -65,6 +39,15 @@ function extractDate(meta) {
   return candidates.find(Boolean) ?? null;
 }
 
+// Load existing tracks to preserve manually edited fields
+let existing = {};
+if (fs.existsSync(OUT_FILE)) {
+  const src = fs.readFileSync(OUT_FILE, "utf8");
+  for (const match of src.matchAll(/id:\s*"([^"]+)"[\s\S]*?file:\s*"([^"]+)"/g)) {
+    existing[match[2]] = match[1];
+  }
+}
+
 const files = fs.readdirSync(AUDIO_DIR).filter((f) => EXTS.includes(path.extname(f).toLowerCase()));
 
 if (files.length === 0) {
@@ -72,8 +55,7 @@ if (files.length === 0) {
   process.exit(0);
 }
 
-let inserted = 0;
-let updated = 0;
+const tracks = [];
 
 for (const filename of files) {
   const filepath = path.join(AUDIO_DIR, filename);
@@ -88,25 +70,46 @@ for (const filename of files) {
     meta = { common: {}, format: {} };
   }
 
-  const existing = db.prepare("SELECT id FROM tracks WHERE file = ?").get(filePath);
-  const title = meta.common?.title ?? basename;
+  const title = meta.common?.title ?? null;
   const artist = meta.common?.artist ?? meta.common?.albumartist ?? null;
   const description = meta.common?.comment?.[0] ?? null;
   const duration = formatDuration(meta.format?.duration);
-  const recorded_at = extractDate(meta);
-  const id = slugify(title);
+  const recordedAt = extractDate(meta);
 
-  insert.run({ id, title, artist, description, duration, recorded_at, file: filePath });
-
-  if (existing) {
-    console.log(`  ~ updated metadata: ${filename}`);
-    updated++;
-  } else {
-    console.log(`  + inserted: ${filename}`);
-    console.log(`    Open bison.db to fill in title, artist, description if needed.`);
-    inserted++;
-  }
+  tracks.push({ id: slugify(title ?? basename), file: filePath, title, artist, description, duration, recordedAt });
+  console.log(`  ✓ ${filename}`);
 }
 
-db.close();
-console.log(`\n✅ Done — ${inserted} inserted, ${updated} updated`);
+const lines = [
+  `export interface Track {`,
+  `  id: string;`,
+  `  file: string;`,
+  `  title: string;`,
+  `  artist: string;`,
+  `  description: string;`,
+  `  duration: string | null;`,
+  `  recordedAt: string | null;`,
+  `}`,
+  ``,
+  `// ── Edit tracks here (or run \`npm run scan-audio\` to regenerate) ────`,
+  ``,
+  `export const tracks: Track[] = [`,
+];
+
+for (const t of tracks) {
+  lines.push(`  {`);
+  lines.push(`    id: ${JSON.stringify(t.id)},`);
+  lines.push(`    file: ${JSON.stringify(t.file)},`);
+  lines.push(`    title: ${t.title ? JSON.stringify(t.title) : `"TODO: title for ${path.basename(t.file)}"`},`);
+  lines.push(`    artist: ${t.artist ? JSON.stringify(t.artist) : `"TODO: artist"`},`);
+  lines.push(`    description: ${t.description ? JSON.stringify(t.description) : `"TODO: description"`},`);
+  lines.push(`    duration: ${JSON.stringify(t.duration)},`);
+  lines.push(`    recordedAt: ${JSON.stringify(t.recordedAt)},`);
+  lines.push(`  },`);
+}
+
+lines.push(`];`);
+lines.push(``);
+
+fs.writeFileSync(OUT_FILE, lines.join("\n"), "utf8");
+console.log(`\n✅ Written to src/data/tracks.ts (${tracks.length} tracks)`);
