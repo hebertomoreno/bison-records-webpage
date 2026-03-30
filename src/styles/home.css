@@ -55,7 +55,7 @@
 .upcoming__release {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.1rem;
 }
 
 .upcoming__cover {
@@ -87,6 +87,15 @@
   font-style: italic;
   color: var(--foreground);
   line-height: 1.2;
+}
+
+.upcoming__release-type {
+  font-family: var(--font-cormorant);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--foreground) 40%, transparent);
 }
 
 .upcoming__date {

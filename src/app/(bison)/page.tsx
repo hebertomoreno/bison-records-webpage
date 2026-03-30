@@ -1,6 +1,6 @@
 import Hero from "../../components/Hero";
 import "../../styles/home.css";
-import { upcomingReleases, recentReleases, type Release } from "../../data/releases";
+import { getUpcomingReleases, getRecentReleases, type ReleaseRow as Release } from "../../lib/db";
 
 function ReleaseGrid({ heading, releases, empty }: { heading: string; releases: Release[]; empty: string }) {
   return (
@@ -11,8 +11,9 @@ function ReleaseGrid({ heading, releases, empty }: { heading: string; releases: 
           {releases.map((release) => (
             <div key={`${release.artist}-${release.title}`} className="upcoming__release">
               <img src={release.image} alt={release.title} className="upcoming__cover" />
-              <p className="upcoming__artist">{release.artist}</p>
               <p className="upcoming__title">{release.title}</p>
+              <p className="upcoming__artist">{release.artist}</p>
+              <p className="upcoming__release-type">{release.release_type}</p>
               <p className="upcoming__date">{release.date}</p>
               <a href={release.href} className="upcoming__link">Learn More</a>
             </div>
@@ -25,7 +26,10 @@ function ReleaseGrid({ heading, releases, empty }: { heading: string; releases: 
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const upcomingReleases = getUpcomingReleases();
+  const recentReleases = getRecentReleases();
+
   return (
     <div className="home-page">
       <Hero />

@@ -46,17 +46,18 @@ async function getAccessToken(): Promise<string> {
 
 export async function getArtistAlbums(): Promise<SpotifyAlbum[]> {
   const token = await getAccessToken();
+  const headers = { Authorization: `Bearer ${token}` };
+  const items: SpotifyAlbum[] = [];
 
-  const res = await fetch(
-    `https://api.spotify.com/v1/artists/${ARTIST_ID}/albums?include_groups=album,single,ep&limit=20&market=US`,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-      next: { revalidate: 86400 }, // cache for 1 day
-    }
-  );
+  let url: string | null =
+    `https://api.spotify.com/v1/artists/${ARTIST_ID}/albums?include_groups=album,single,ep`;
 
-  const data = await res.json();
-  const items: SpotifyAlbum[] = data.items ?? [];
+  while (url) {
+    const res: Response = await fetch(url, { headers, next: { revalidate: 86400 } });
+    const data: { items?: SpotifyAlbum[]; next?: string | null } = await res.json();
+    items.push(...(data.items ?? []));
+    url = data.next ?? null;
+  }
 
   // Sort newest first
   return items.sort((a, b) => (a.release_date < b.release_date ? 1 : -1));

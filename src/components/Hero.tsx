@@ -5,7 +5,8 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import "../styles/hero.css";
 
 interface Slide {
-  image: string;
+  image?: string;
+  video?: string;
   artist?: string;
   title: string;
   subtitle?: string;
@@ -16,24 +17,18 @@ interface Slide {
 // ── Add or edit slides here ──────────────────────────────────────
 const slides: Slide[] = [
   {
-    image: "/media/images/NikolasMurdockImage.jpg",
-    artist: "Nikolas Murdock's",
-    title: "Year Of The Brown Bear",
-    subtitle: "November 5th",
-    tagline: "Because I really like V for Vendetta",
-    buttons: [
-      { label: "Listen", href: "/artists/nikolas-murdock#music" },
-      { label: "More", href: "/artists/nikolas-murdock" },
-    ],
+    video: "/media/video/Hero1.MP4",
+    title: "Bison Records",
+    subtitle: "Ars sola est digna occupatio",
+    tagline: "Since 2014",
+    buttons: [{ label: "Our Artists", href: "/artists" }],
   },
   {
-    image: "/media/images/forest.JPG",
-    title: "Bison Records",
-    subtitle: "Independent · Intentional",
-    tagline: "Music that earns its silence",
-    buttons: [
-      { label: "Our Artists", href: "/artists" },
-    ],
+    image: "/media/images/bear1.jpg",
+    artist: "Nikolas Murdock's",
+    title: "Year Of The Brown Bear",
+    subtitle: "November 5th, 2026",
+    buttons: [{ label: "Who's Nikolas Murdock?", href: "/artists/nikolas-murdock" }],
   },
 ];
 // ────────────────────────────────────────────────────────────────
@@ -68,8 +63,18 @@ export default function Hero() {
         <div
           key={i}
           className={`hero-slide ${i === current ? "hero-slide--active" : ""}`}
-          style={{ backgroundImage: `url(${slide.image})` }}
+          style={slide.image ? { backgroundImage: `url(${slide.image})` } : undefined}
         >
+          {slide.video && (
+            <video
+              className="hero-slide__video"
+              src={slide.video}
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          )}
           <div className="hero-slide__overlay" />
           <div className="hero-content">
             {slide.artist && <p className="hero-artist">{slide.artist}</p>}
