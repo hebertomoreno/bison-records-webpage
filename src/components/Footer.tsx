@@ -1,17 +1,22 @@
 import Link from "next/link";
 import Image from "next/image";
+import { getLocale } from "../lib/locale";
+import { t } from "../lib/translations";
 import "../styles/footer.css";
 
-const links = [
-  { label: "Artists", href: "/artists" },
-  { label: "Sounds", href: "/sounds" },
-  { label: "Blog", href: "/blog" },
-  { label: "Press", href: "/press" },
-  { label: "Contact", href: "/contact" },
-];
-
-export default function Footer() {
+export default async function Footer() {
+  const locale = await getLocale();
+  const tr = t(locale).footer;
+  const navTr = t(locale).nav;
   const year = new Date().getFullYear();
+
+  const links = [
+    { label: navTr.artists, href: "/artists" },
+    { label: navTr.sounds, href: "/sounds" },
+    { label: navTr.blog, href: "/blog" },
+    { label: navTr.press, href: "/press" },
+    { label: navTr.contact, href: "/contact" },
+  ];
 
   return (
     <footer className="site-footer">
@@ -40,7 +45,7 @@ export default function Footer() {
         </nav>
 
         <div className="site-footer__contact">
-          <p className="site-footer__contact-label">Get in touch</p>
+          <p className="site-footer__contact-label">{tr.getInTouch}</p>
           <a href="mailto:info@bisonrecords.com" className="site-footer__email">
             info@bisonrecords.com
           </a>
@@ -48,7 +53,7 @@ export default function Footer() {
       </div>
 
       <div className="site-footer__bottom">
-        <p>© {year} Bison Records. All rights reserved.</p>
+        <p>© {year} Bison Records. {tr.rights}</p>
       </div>
     </footer>
   );

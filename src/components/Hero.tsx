@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import "../styles/hero.css";
 
-interface Slide {
+export interface Slide {
   image?: string;
   video?: string;
   artist?: string;
@@ -14,38 +14,19 @@ interface Slide {
   buttons?: { label: string; href: string }[];
 }
 
-// ── Add or edit slides here ──────────────────────────────────────
-const slides: Slide[] = [
-  {
-    video: "/media/video/hero1",
-    title: "Bison Records",
-    subtitle: "Ars sola est digna occupatio",
-    tagline: "Since 2014",
-    buttons: [{ label: "Our Artists", href: "/artists" }],
-  },
-  {
-    image: "/media/images/bear1.jpg",
-    artist: "Nikolas Murdock's",
-    title: "Year Of The Brown Bear",
-    subtitle: "November 5th, 2026",
-    buttons: [{ label: "Who's Nikolas Murdock?", href: "/artists/nikolas-murdock" }],
-  },
-];
-// ────────────────────────────────────────────────────────────────
-
 const INTERVAL = 15000;
 
-export default function Hero() {
+export default function Hero({ slides }: { slides: Slide[] }) {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
 
   const next = useCallback(() => {
     setCurrent((i) => (i + 1) % slides.length);
-  }, []);
+  }, [slides.length]);
 
   const prev = useCallback(() => {
     setCurrent((i) => (i - 1 + slides.length) % slides.length);
-  }, []);
+  }, [slides.length]);
 
   useEffect(() => {
     if (paused) return;
@@ -66,13 +47,7 @@ export default function Hero() {
           style={slide.image ? { backgroundImage: `url(${slide.image})` } : undefined}
         >
           {slide.video && (
-            <video
-              className="hero-slide__video"
-              autoPlay
-              muted
-              loop
-              playsInline
-            >
+            <video className="hero-slide__video" autoPlay muted loop playsInline>
               <source src={`${slide.video}.webm`} type="video/webm" />
               <source src={`${slide.video}-opt.mp4`} type="video/mp4" />
             </video>

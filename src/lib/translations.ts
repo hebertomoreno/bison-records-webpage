@@ -18,11 +18,30 @@ export const translations = {
     },
     videos: {
       heading: "Videos",
+      description: "Music videos, short films, and visual works from the Bison Records family.",
+      watch: "Watch on YouTube",
     },
     blog: {
       heading: "Blog",
       back: "← All Posts",
       by: "by",
+    },
+    hero: {
+      tagline: "Since 2014",
+      ourArtists: "Our Artists",
+      nikolasSubtitle: "November 5th, 2026",
+      nikolasButton: "Who's Nikolas Murdock?",
+    },
+    footer: {
+      getInTouch: "Get in touch",
+      rights: "All rights reserved.",
+    },
+    releases: {
+      recent: "Recent Releases",
+      upcoming: "Upcoming Releases",
+      learnMore: "Learn More",
+      noRecent: "No recent releases.",
+      noUpcoming: "No upcoming releases.",
     },
     nikolas: {
       nav: {
@@ -78,11 +97,30 @@ export const translations = {
     },
     videos: {
       heading: "Videos",
+      description: "Videoclips, cortometrajes y obras visuales del equipo de Bison Records.",
+      watch: "Ver en YouTube",
     },
     blog: {
       heading: "Blog",
       back: "← Todas las entradas",
       by: "por",
+    },
+    hero: {
+      tagline: "Desde 2014",
+      ourArtists: "Nuestros Artistas",
+      nikolasSubtitle: "5 de noviembre, 2026",
+      nikolasButton: "¿Quién es Nikolas Murdock?",
+    },
+    footer: {
+      getInTouch: "Contáctanos",
+      rights: "Todos los derechos reservados.",
+    },
+    releases: {
+      recent: "Lanzamientos Recientes",
+      upcoming: "Próximos Lanzamientos",
+      learnMore: "Ver más",
+      noRecent: "Sin lanzamientos recientes.",
+      noUpcoming: "Sin próximos lanzamientos.",
     },
     nikolas: {
       nav: {

@@ -1,0 +1,226 @@
+.videos-page {
+  padding: 8rem 2rem 4rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.videos-heading {
+  font-family: var(--font-cormorant);
+  font-size: 48px;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 1px;
+  margin-bottom: 3rem;
+  color: var(--foreground);
+}
+
+.videos-description {
+  font-family: var(--font-cormorant);
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+  color: color-mix(in srgb, var(--foreground) 55%, transparent);
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+}
+
+/* ── Video list ── */
+.videos-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.video-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+  text-decoration: none;
+  color: inherit;
+}
+
+.video-row:first-child {
+  border-top: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+}
+
+/* Thumbnail */
+.video-thumb-wrap {
+  display: block;
+  width: 160px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+
+.video-thumb-wrap--portrait {
+  aspect-ratio: 9 / 16;
+  width: 90px;
+}
+
+.video-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+.video-row:hover .video-thumb {
+  opacity: 0.85;
+}
+
+/* Info */
+.video-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.video-title {
+  font-family: var(--font-cormorant);
+  font-size: 22px;
+  font-weight: 600;
+  font-style: italic;
+  color: var(--foreground);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.video-row:hover .video-title {
+  opacity: 0.7;
+}
+
+.video-author {
+  font-family: var(--font-cormorant);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--foreground) 45%, transparent);
+}
+
+.video-description {
+  font-family: var(--font-cormorant);
+  font-size: 15px;
+  font-weight: 400;
+  font-style: italic;
+  color: color-mix(in srgb, var(--foreground) 55%, transparent);
+  margin-top: 0.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.video-badge {
+  font-family: var(--font-cormorant);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--foreground) 35%, transparent);
+  margin-top: 0.4rem;
+}
+
+/* ── Detail page ── */
+.video-detail {
+  padding: 8rem 2rem 6rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.video-detail__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-cormorant);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--foreground) 45%, transparent);
+  text-decoration: none;
+  margin-bottom: 2.5rem;
+  transition: color 0.2s ease;
+}
+
+.video-detail__back:hover {
+  color: var(--foreground);
+}
+
+.video-detail__player {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.video-detail__player--portrait {
+  aspect-ratio: 9 / 16;
+  max-width: 420px;
+}
+
+.video-detail__title {
+  font-family: var(--font-cormorant);
+  font-size: 42px;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
+}
+
+.video-detail__author {
+  font-family: var(--font-cormorant);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--foreground) 45%, transparent);
+  margin-bottom: 1.5rem;
+}
+
+.video-detail__description {
+  font-family: var(--font-cormorant);
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--foreground) 70%, transparent);
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .videos-page,
+  .video-detail {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .videos-heading,
+  .video-detail__title {
+    font-size: 36px;
+    margin-bottom: 1.5rem;
+  }
+
+  .video-row {
+    grid-template-columns: 120px 1fr;
+    gap: 1rem;
+  }
+
+  .video-thumb-wrap {
+    width: 120px;
+  }
+
+  .video-thumb-wrap--portrait {
+    width: 68px;
+  }
+
+  .video-title {
+    font-size: 18px;
+  }
+}
