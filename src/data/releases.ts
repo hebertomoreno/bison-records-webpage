@@ -14,7 +14,7 @@ export const upcomingReleases: Release[] = [
     artist: "Nikolas Murdock feat. R.A.P Ferreira",
     title: "Earth 2",
     date: "May 5, 2026",
-    image: "/media/images/bear2.jpg",
+    image: "/media/images/EarthCover1.png",
     href: "/artists/nikolas-murdock",
     release_type: "Single",
   },
