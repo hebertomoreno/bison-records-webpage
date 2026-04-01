@@ -187,4 +187,5 @@ export const destinations: string[] = [
   "https://www.cracked.com/quick-fixes/robin-williams-why-funny-people-kill-themselves",
   "https://www.outsideonline.com/outdoor-adventure/water-activities/stone-skipping-kurt-steiner/",
   "https://omnichord.jake.fun/",
+  "https://youtu.be/uzz5YAtbQu8?si=oaqqn1baMD5R0nw4",
 ];
