@@ -67,7 +67,7 @@ async function fetchWithRetry(url, options, retries = 4) {
 async function fetchAlbums(token) {
   const headers = { Authorization: `Bearer ${token}` };
   const items = [];
-  let url = `https://api.spotify.com/v1/artists/${ARTIST_ID}/albums?include_groups=album,single,ep&limit=50`;
+  let url = `https://api.spotify.com/v1/artists/${ARTIST_ID}/albums?include_groups=album,single,ep`;
   while (url) {
     const res = await fetchWithRetry(url, { headers });
     if (!res.ok) throw new Error(`Spotify albums error ${res.status}: ${await res.text()}`);
