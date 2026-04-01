@@ -1,4 +1,5 @@
 import Hero from "../../components/Hero";
+import SomewhereButton from "../../components/SomewhereButton";
 import "../../styles/home.css";
 import { getUpcomingReleases, getRecentReleases, type ReleaseRow as Release } from "../../lib/db";
 import { getLocale } from "../../lib/locale";
@@ -66,6 +67,7 @@ export default async function HomePage() {
   return (
     <div className="home-page">
       <Hero slides={slides} />
+      <SomewhereButton />
       <div className="home-releases">
         <ReleaseGrid
           heading={releasesTr.recent}
