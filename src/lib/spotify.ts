@@ -37,10 +37,16 @@ async function getAccessToken(): Promise<string> {
       Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
     },
     body: "grant_type=client_credentials",
-    next: { revalidate: 3500 }, // cache token for just under 1 hour
+    cache: "no-store",
   });
 
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Spotify token error ${res.status}: ${text}`);
+  }
+
   const data = await res.json();
+  if (!data.access_token) throw new Error(`Spotify token missing: ${JSON.stringify(data)}`);
   return data.access_token;
 }
 
@@ -54,6 +60,10 @@ export async function getArtistAlbums(): Promise<SpotifyAlbum[]> {
 
   while (url) {
     const res: Response = await fetch(url, { headers, next: { revalidate: 86400 } });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`Spotify albums error ${res.status}: ${text}`);
+    }
     const data: { items?: SpotifyAlbum[]; next?: string | null } = await res.json();
     items.push(...(data.items ?? []));
     url = data.next ?? null;

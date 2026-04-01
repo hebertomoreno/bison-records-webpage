@@ -10,6 +10,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "scan-audio": "node scripts/scan-audio.mjs",
+    "fetch-spotify": "node scripts/fetch-spotify.mjs",
     "seed": "node scripts/seed.mjs"
   },
   "dependencies": {

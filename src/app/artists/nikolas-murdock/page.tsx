@@ -1,6 +1,5 @@
 import "../../../styles/nikolas-murdock.css";
-import { getArtistAlbums, type SpotifyAlbum } from "../../../lib/spotify";
-import { getAppleMusicUrls } from "../../../lib/apple-music";
+import { albums } from "../../../data/albums";
 import { getArtistEvents, formatEventDate, type BandsintownEvent } from "../../../lib/bandsintown";
 import { getLocale } from "../../../lib/locale";
 import { t } from "../../../lib/translations";
@@ -12,16 +11,7 @@ export default async function NikolasMurdockPage() {
   const locale = await getLocale();
   const tr = t(locale).nikolas;
 
-  let albums: SpotifyAlbum[] = [];
   let events: BandsintownEvent[] = [];
-  let appleMusicUrls: Record<string, string | null> = {};
-
-  try {
-    albums = await getArtistAlbums();
-    appleMusicUrls = await getAppleMusicUrls(albums.map((a) => a.name));
-  } catch (err) {
-    console.error("[nikolas-murdock] Spotify fetch failed:", err);
-  }
 
   try {
     events = await getArtistEvents();
@@ -44,23 +34,23 @@ export default async function NikolasMurdockPage() {
           {albums.length > 0 ? (
             <div className="nm-music-grid">
               {albums.map((album) => (
-                <div key={album.id} className="nm-release">
+                <div key={album.spotifyId} className="nm-release">
                   <img
-                    src={album.images[0]?.url}
+                    src={album.image}
                     alt={album.name}
                     className="nm-release__cover"
                   />
                   <p className="nm-release__title">{album.name}</p>
                   <p className="nm-release__year">
-                    {album.release_date.slice(0, 4)}
-                    <span className="nm-release__type">{album.album_type}</span>
+                    {album.releaseDate.slice(0, 4)}
+                    <span className="nm-release__type">{album.albumType}</span>
                   </p>
                   <div className="nm-release__links">
-                    <a href={album.external_urls.spotify} target="_blank" rel="noopener noreferrer" className="nm-release__link">
+                    <a href={album.spotifyUrl} target="_blank" rel="noopener noreferrer" className="nm-release__link">
                       Spotify →
                     </a>
-                    {appleMusicUrls[album.name] && (
-                      <a href={appleMusicUrls[album.name]!} target="_blank" rel="noopener noreferrer" className="nm-release__link">
+                    {album.appleMusicUrl && (
+                      <a href={album.appleMusicUrl} target="_blank" rel="noopener noreferrer" className="nm-release__link">
                         Apple Music →
                       </a>
                     )}
