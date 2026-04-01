@@ -19,14 +19,14 @@ export default async function NikolasMurdockPage() {
   try {
     albums = await getArtistAlbums();
     appleMusicUrls = await getAppleMusicUrls(albums.map((a) => a.name));
-  } catch {
-    // Credentials not set yet — music section will be empty
+  } catch (err) {
+    console.error("[nikolas-murdock] Spotify fetch failed:", err);
   }
 
   try {
     events = await getArtistEvents();
-  } catch {
-    // Credentials not set yet — shows section will be empty
+  } catch (err) {
+    console.error("[nikolas-murdock] Bandsintown fetch failed:", err);
   }
 
   return (
