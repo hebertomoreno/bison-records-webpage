@@ -18,7 +18,7 @@ export default function NikolasNavbar({ items }: { items: NavItem[] }) {
     <header className="nm-nav">
       <div className="nm-nav__inner">
         <div className="nm-nav__brand-group">
-          <Link href="/" className="nm-nav__label">Bison Records</Link>
+          <a href="https://bisonrecords.co" className="nm-nav__label">Bison Records</a>
           <a href="#hero" className="nm-nav__brand">Nikolas Murdock</a>
         </div>
         <button className="nm-nav__toggle" onClick={() => setOpen((o) => !o)}>

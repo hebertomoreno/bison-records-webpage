@@ -5,6 +5,7 @@ export const translations = {
       videos: "Videos",
       sounds: "Sounds",
       blog: "Blog",
+      events: "Events",
       press: "Press",
       contact: "Contact",
     },
@@ -25,6 +26,11 @@ export const translations = {
       heading: "Blog",
       back: "← All Posts",
       by: "by",
+    },
+    events: {
+      heading: "Events",
+      empty: "No upcoming events.",
+      readPost: "Read the post",
     },
     hero: {
       tagline: "Since 2014",
@@ -84,6 +90,7 @@ export const translations = {
       videos: "Videos",
       sounds: "Sonidos",
       blog: "Blog",
+      events: "Eventos",
       press: "Prensa",
       contact: "Contacto",
     },
@@ -104,6 +111,11 @@ export const translations = {
       heading: "Blog",
       back: "← Todas las entradas",
       by: "por",
+    },
+    events: {
+      heading: "Eventos",
+      empty: "Sin eventos próximos.",
+      readPost: "Leer la entrada",
     },
     hero: {
       tagline: "Desde 2014",

@@ -17,6 +17,7 @@ export default async function BisonLayout({
     { key: "videos", label: tr.nav.videos },
     { key: "sounds", label: tr.nav.sounds },
     { key: "blog", label: tr.nav.blog },
+    { key: "events", label: tr.nav.events },
     { key: "press", label: tr.nav.press },
     { key: "contact", label: tr.nav.contact },
   ];
