@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import Link from "next/link";
+import Image from "next/image";
 import "../styles/nikolas-murdock.css";
 import LanguageSwitcher from "./LanguageSwitcher";
 
@@ -18,8 +19,15 @@ export default function NikolasNavbar({ items }: { items: NavItem[] }) {
     <header className="nm-nav">
       <div className="nm-nav__inner">
         <div className="nm-nav__brand-group">
-          <a href="https://bisonrecords.co" className="nm-nav__label">Bison Records</a>
-          <a href="#hero" className="nm-nav__brand">Nikolas Murdock</a>
+          <a href="#hero" className="nm-nav__brand">
+            <Image
+              src="/media/images/NikMDkLogo.png"
+              alt="Nikolas Murdock"
+              height={82}
+              width={200}
+              style={{ height: 82, width: "auto", display: "block" }}
+            />
+          </a>
         </div>
         <button className="nm-nav__toggle" onClick={() => setOpen((o) => !o)}>
           {open ? <FiX size={22} /> : <FiMenu size={22} />}
