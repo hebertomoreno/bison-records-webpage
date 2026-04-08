@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 
 const slides = [
   "/media/images/bear1.jpg",
@@ -57,7 +58,13 @@ export default function NikolasHero({ release, cta }: Props) {
         </button>
 
         <div className="nm-hero__content">
-          <h1 className="nm-hero__name">Nikolas Murdock</h1>
+          <Image
+            src="/media/images/NikMDkLogo.png"
+            alt="Nikolas Murdock"
+            height={200}
+            width={600}
+            className="nm-hero__name-logo"
+          />
           <p className="nm-hero__release">{release}</p>
           <a href="#music" className="nm-hero__cta">{cta}</a>
         </div>

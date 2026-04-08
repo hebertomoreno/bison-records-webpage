@@ -2,11 +2,13 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import Image from "next/image";
 import "../styles/hero.css";
 
 export interface Slide {
   image?: string;
   video?: string;
+  logo?: string;
   artist?: string;
   title: string;
   subtitle?: string;
@@ -55,6 +57,15 @@ export default function Hero({ slides }: { slides: Slide[] }) {
           <div className="hero-slide__overlay" />
           <div className="hero-content">
             {slide.artist && <p className="hero-artist">{slide.artist}</p>}
+            {slide.logo && (
+              <Image
+                src={slide.logo}
+                alt={slide.title}
+                height={200}
+                width={600}
+                className="hero-title-logo"
+              />
+            )}
             <p className="hero-title">{slide.title}</p>
             {slide.subtitle && <p className="hero-subtitle">{slide.subtitle}</p>}
             {slide.tagline && <p className="hero-tagline">{slide.tagline}</p>}

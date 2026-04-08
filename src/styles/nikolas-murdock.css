@@ -236,6 +236,20 @@
   margin-bottom: 1rem;
 }
 
+.nm-hero__name-logo {
+  display: block;
+  height: 200px;
+  width: auto;
+  margin: 0 auto 1rem;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 30px rgba(0, 0, 0, 0.8));
+}
+
+@media (max-width: 600px) {
+  .nm-hero__name-logo {
+    height: 100px;
+  }
+}
+
 .nm-hero__release {
   font-family: var(--font-cormorant);
   font-size: 20px;

@@ -57,7 +57,7 @@ export default async function HomePage() {
     },
     {
       image: "/media/images/bear1.jpg",
-      artist: "Nikolas Murdock's",
+      logo: "/media/images/NikMDkLogo.png",
       title: "Year Of The Brown Bear",
       subtitle: heroTr.nikolasSubtitle,
       buttons: [{ label: heroTr.nikolasButton, href: "/artists/nikolas-murdock" }],

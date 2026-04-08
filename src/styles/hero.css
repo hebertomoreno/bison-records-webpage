@@ -65,6 +65,20 @@
   margin-bottom: 16px;
 }
 
+.hero-title-logo {
+  display: block;
+  height: 200px;
+  width: auto;
+  margin: 0 auto 16px;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 24px rgba(0, 0, 0, 0.85));
+}
+
+@media (max-width: 600px) {
+  .hero-title-logo {
+    height: 100px;
+  }
+}
+
 .hero-artist {
   font-family: var(--font-cormorant);
   font-size: 30px;
