@@ -226,28 +226,14 @@
 
 .nm-hero__name {
   font-family: var(--font-cormorant);
-  font-size: 80px;
+  font-size: 76px;
   font-weight: 700;
   font-style: italic;
   line-height: 1;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   color: #fff;
-  text-shadow: 0 2px 30px rgba(0,0,0,0.8);
-  margin-bottom: 1rem;
-}
-
-.nm-hero__name-logo {
-  display: block;
-  height: 200px;
-  width: auto;
-  margin: 0 auto 1rem;
-  filter: brightness(0) invert(1) drop-shadow(0 2px 30px rgba(0, 0, 0, 0.8));
-}
-
-@media (max-width: 600px) {
-  .nm-hero__name-logo {
-    height: 100px;
-  }
+  text-shadow: 0 2px 24px rgba(0,0,0,0.85), 0 0 60px rgba(0,0,0,0.4);
+  margin-bottom: 16px;
 }
 
 .nm-hero__release {
@@ -258,6 +244,14 @@
   letter-spacing: 4px;
   color: rgba(255,255,255,0.75);
   margin-bottom: 2.5rem;
+}
+
+
+.nm-hero__links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .nm-hero__cta {
@@ -303,6 +297,19 @@
 }
 
 /* Music */
+.nm-releases {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.nm-releases__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
 .nm-music-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));

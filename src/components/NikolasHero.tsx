@@ -1,12 +1,31 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
 
-const slides = [
-  "/media/images/bear1.jpg",
-  "/media/images/bear2.jpg",
-  "/media/images/bear3.jpg",
+interface Slide {
+  image: string;
+  label?: string;
+  title?: string;
+  spotifyUrl?: string;
+  appleMusicUrl?: string | null;
+}
+
+const slides: Slide[] = [
+  { image: "/media/images/bear1.jpg" },
+  {
+    image: "https://i.scdn.co/image/ab67616d0000b27353f72953082aeecbce08b090",
+    label: "Single · 2021",
+    title: "Reincarnation 2021",
+    spotifyUrl: "https://open.spotify.com/album/1P36fTOvIv5tKtpQFfCe7V",
+    appleMusicUrl: "https://music.apple.com/us/album/reincarnation-2021-single/1570586587?uo=4",
+  },
+  {
+    image: "https://i.scdn.co/image/ab67616d0000b273ff3dd5ab7cebd1dd8083b896",
+    label: "Single · 2021",
+    title: "Monóxido",
+    spotifyUrl: "https://open.spotify.com/album/0HtbGw7OkIhhWrAX8Rcd95",
+    appleMusicUrl: "https://music.apple.com/us/album/mon%C3%B3xido-single/1561644636?uo=4",
+  },
 ];
 
 interface Props {
@@ -37,12 +56,12 @@ export default function NikolasHero({ release, cta }: Props) {
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {slides.map((src, i) => (
+        {slides.map((slide, i) => (
           <div
-            key={src}
+            key={i}
             className="nm-hero__slide"
             style={{
-              backgroundImage: `url(${src})`,
+              backgroundImage: `url(${slide.image})`,
               opacity: i === current ? 1 : 0,
             }}
           />
@@ -58,15 +77,26 @@ export default function NikolasHero({ release, cta }: Props) {
         </button>
 
         <div className="nm-hero__content">
-          <Image
-            src="/media/images/NikMDkLogo.png"
-            alt="Nikolas Murdock"
-            height={200}
-            width={600}
-            className="nm-hero__name-logo"
-          />
-          <p className="nm-hero__release">{release}</p>
-          <a href="#music" className="nm-hero__cta">{cta}</a>
+          {slides[current].title ? (
+            <>
+              <p className="nm-hero__release">{slides[current].label}</p>
+              <p className="nm-hero__name">{slides[current].title}</p>
+              <div className="nm-hero__links">
+                {slides[current].spotifyUrl && (
+                  <a href={slides[current].spotifyUrl} target="_blank" rel="noopener noreferrer" className="nm-hero__cta">Spotify</a>
+                )}
+                {slides[current].appleMusicUrl && (
+                  <a href={slides[current].appleMusicUrl!} target="_blank" rel="noopener noreferrer" className="nm-hero__cta">Apple Music</a>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              <h1 className="nm-hero__name">Nikolas Murdock</h1>
+              <p className="nm-hero__release">{release}</p>
+              <a href="#music" className="nm-hero__cta">{cta}</a>
+            </>
+          )}
         </div>
 
         <div className="nm-hero__dots">

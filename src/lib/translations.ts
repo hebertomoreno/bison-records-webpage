@@ -71,6 +71,10 @@ export const translations = {
       music: {
         empty: "Music coming soon.",
       },
+      releases: {
+        upcoming: "Upcoming",
+        recent: "Recent",
+      },
       about: {
         bio: "Singer-songwriter, multi-instrumentalist and producer Heberto Moreno makes music under the moniker Nikolas Murdock. Hailing from Sonora, but with homes in all sorts of places and currently based in Guadalajara, Jalisco, his experiences throughout Mexico have fueled a deep desire to communicate with storms of sound. With a profoundly DIY approach, Moreno has managed to capture deeply melancholic sensibilities while creating catchy, complicated songs with danceable melodies.\n\nIn 2016 he traveled to Valle de Bravo, Estado de México to record his second album Resilience in a cabin in the middle of the woods. The result from this can be heard in the end product, where the low-budget production shines through with hard hitting lyrics and fun rhythms.\n\nHis most recent efforts in the form of three singles released one month apart in 2021 showcase his talents as a songwriter, producer and mixing engineer. Produced and mixed in his home studio, Monóxido, Insightful and Reincarnation 2021 are logical next steps for an artist that is in search of constantly improving his craft.",
       },
@@ -155,6 +159,10 @@ export const translations = {
       },
       music: {
         empty: "Música próximamente.",
+      },
+      releases: {
+        upcoming: "Próximos",
+        recent: "Recientes",
       },
       about: {
         bio: "El cantautor, multi-instrumentista y productor Heberto Moreno hace música bajo el seudónimo Nikolas Murdock. Originario de Sonora, pero con hogares en múltiples lugares y actualmente radicado en Guadalajara, Jalisco, sus experiencias a lo largo de México han alimentado un profundo deseo de comunicarse a través de tormentas de sonido. Con un enfoque profundamente DIY, Moreno ha logrado capturar sensibilidades melancólicas mientras crea canciones pegadizas y complejas con melodías bailables.\n\nEn 2016 viajó a Valle de Bravo, Estado de México, para grabar su segundo álbum Resilience en una cabaña en medio del bosque. El resultado se escucha en el producto final, donde la producción de bajo presupuesto brilla con letras contundentes y ritmos divertidos.\n\nSus esfuerzos más recientes, en forma de tres sencillos lanzados con un mes de diferencia en 2021, muestran sus talentos como compositor, productor e ingeniero de mezcla. Producidos y mezclados en su estudio casero, Monóxido, Insightful y Reincarnation 2021 son pasos lógicos para un artista en constante búsqueda de mejorar su oficio.",

@@ -1,6 +1,7 @@
 import "../../../styles/nikolas-murdock.css";
 import { albums } from "../../../data/albums";
 import { getArtistEvents, formatEventDate, type BandsintownEvent } from "../../../lib/bandsintown";
+import { getUpcomingReleases, getRecentReleases } from "../../../lib/db";
 import { getLocale } from "../../../lib/locale";
 import { t } from "../../../lib/translations";
 import NikolasHero from "../../../components/NikolasHero";
@@ -10,6 +11,13 @@ const videoIds = ["dQw4w9WgXcQ", "eY52Zsg-KVI"];
 export default async function NikolasMurdockPage() {
   const locale = await getLocale();
   const tr = t(locale).nikolas;
+
+  const allUpcoming = getUpcomingReleases().filter((r) =>
+    r.artist.toLowerCase().includes("nikolas murdock")
+  );
+  const allRecent = getRecentReleases().filter((r) =>
+    r.artist.toLowerCase().includes("nikolas murdock")
+  );
 
   let events: BandsintownEvent[] = [];
 
@@ -26,6 +34,45 @@ export default async function NikolasMurdockPage() {
       <NikolasHero release={tr.hero.release} cta={tr.hero.cta} />
 
       <div className="nm-divider" />
+
+      {/* ── Releases ── */}
+      {(allUpcoming.length > 0 || allRecent.length > 0) && (
+        <>
+          <section id="releases">
+            <div className="nm-section nm-releases">
+              {allUpcoming.length > 0 && (
+                <div className="nm-releases__group">
+                  <h2 className="nm-section__title">{tr.releases.upcoming}</h2>
+                  <div className="nm-releases__grid">
+                    {allUpcoming.map((r) => (
+                      <div key={`${r.artist}-${r.title}`} className="nm-release">
+                        <img src={r.image} alt={r.title} className="nm-release__cover" />
+                        <p className="nm-release__title">{r.title}</p>
+                        <p className="nm-release__year">{r.date}<span className="nm-release__type">{r.release_type}</span></p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {allRecent.length > 0 && (
+                <div className="nm-releases__group">
+                  <h2 className="nm-section__title">{tr.releases.recent}</h2>
+                  <div className="nm-releases__grid">
+                    {allRecent.map((r) => (
+                      <div key={`${r.artist}-${r.title}`} className="nm-release">
+                        <img src={r.image} alt={r.title} className="nm-release__cover" />
+                        <p className="nm-release__title">{r.title}</p>
+                        <p className="nm-release__year">{r.date}<span className="nm-release__type">{r.release_type}</span></p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </section>
+          <div className="nm-divider" />
+        </>
+      )}
 
       {/* ── Music ── */}
       <section id="music">
