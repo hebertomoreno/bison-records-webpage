@@ -10,6 +10,7 @@ interface Event {
   images: string[];
   dates: string[];
   blogSlug?: string;
+  hidden?: boolean;
 }
 
 const EMPTY: Event = {
