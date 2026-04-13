@@ -48,6 +48,7 @@ interface Track {
   description: string;
   duration: string | null;
   recordedAt: string | null;
+  hidden?: boolean;
 }
 
 const EMPTY: Track = {

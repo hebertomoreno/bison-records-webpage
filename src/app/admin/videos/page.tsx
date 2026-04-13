@@ -49,6 +49,7 @@ interface Video {
   file?: string;
   preview?: string;
   youtubeId?: string;
+  hidden?: boolean;
 }
 
 const EMPTY: Video = {
