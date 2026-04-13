@@ -1,5 +1,7 @@
 import "../../../styles/nikolas-murdock.css";
+import Link from "next/link";
 import { albums } from "../../../data/albums";
+import { albumDetails } from "../../../data/album-details";
 import { getArtistEvents, formatEventDate, type BandsintownEvent } from "../../../lib/bandsintown";
 import { getUpcomingReleases, getRecentReleases } from "../../../lib/db";
 import { getLocale } from "../../../lib/locale";
@@ -78,16 +80,20 @@ export default async function NikolasMurdockPage() {
       <section id="music">
         <div className="nm-section">
           <h2 className="nm-section__title">{tr.sections.music}</h2>
-          {albums.length > 0 ? (
+          {(() => { const visibleAlbums = albums.filter((a) => !albumDetails.find((d) => d.spotifyId === a.spotifyId)?.hidden); return visibleAlbums.length > 0 ? (
             <div className="nm-music-grid">
-              {albums.map((album) => (
+              {visibleAlbums.map((album) => (
                 <div key={album.spotifyId} className="nm-release">
-                  <img
-                    src={album.image}
-                    alt={album.name}
-                    className="nm-release__cover"
-                  />
-                  <p className="nm-release__title">{album.name}</p>
+                  <Link href={`/artists/nikolas-murdock/music/${album.spotifyId}`}>
+                    <img
+                      src={album.image}
+                      alt={album.name}
+                      className="nm-release__cover"
+                    />
+                  </Link>
+                  <Link href={`/artists/nikolas-murdock/music/${album.spotifyId}`} className="nm-release__title-link">
+                    <p className="nm-release__title">{album.name}</p>
+                  </Link>
                   <p className="nm-release__year">
                     {album.releaseDate.slice(0, 4)}
                     <span className="nm-release__type">{album.albumType}</span>
@@ -107,7 +113,7 @@ export default async function NikolasMurdockPage() {
             </div>
           ) : (
             <p className="nm-music-empty">{tr.music.empty}</p>
-          )}
+          ); })()}
         </div>
       </section>
 

@@ -16,5 +16,5 @@ export function getRecentReleases(): ReleaseRow[] {
 }
 
 export function getTracks(): TrackRow[] {
-  return tracks.map((t) => ({ ...t, recorded_at: t.recordedAt }));
+  return tracks.filter((t) => !t.hidden).map((t) => ({ ...t, recorded_at: t.recordedAt }));
 }

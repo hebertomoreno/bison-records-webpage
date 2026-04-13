@@ -19,7 +19,7 @@ export default async function VideosPage() {
       <p className="videos-description">{tr.description}</p>
 
       <div className="videos-list">
-        {videos.map((video) => {
+        {videos.filter((v) => !v.hidden).map((video) => {
           const isPortrait = video.id === "facesplaces";
           const thumbClass = `video-thumb-wrap${isPortrait ? " video-thumb-wrap--portrait" : ""}`;
           const thumbSrc = video.type === "youtube"

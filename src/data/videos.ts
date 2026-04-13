@@ -10,6 +10,7 @@ export interface Video {
   preview?: string;
   /** YouTube video ID — for youtube videos */
   youtubeId?: string;
+  hidden?: boolean;
 }
 
 // ── Edit videos here ─────────────────────────────────────────────

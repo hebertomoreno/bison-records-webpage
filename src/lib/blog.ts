@@ -13,6 +13,7 @@ export interface PostMeta {
   date: string;
   author: string;
   excerpt: string;
+  hidden?: boolean;
 }
 
 export interface Post extends PostMeta {
@@ -34,8 +35,10 @@ export function getAllPosts(): PostMeta[] {
         date: data.date ?? "",
         author: data.author ?? "",
         excerpt: data.excerpt ?? "",
+        hidden: data.hidden === true || data.hidden === "true",
       };
     })
+    .filter((p) => !p.hidden)
     .sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 

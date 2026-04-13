@@ -7,16 +7,17 @@ import "../../../styles/events.css";
 export default async function EventsPage() {
   const locale = await getLocale();
   const tr = t(locale).events;
+  const visible = events.filter((e) => !e.hidden);
 
   return (
     <div className="events-page">
       <h1 className="events-heading">{tr.heading}</h1>
 
-      {events.length === 0 ? (
+      {visible.length === 0 ? (
         <p className="events-empty">{tr.empty}</p>
       ) : (
         <div className="events-list">
-          {events.map((event) => (
+          {visible.map((event) => (
             <article key={event.id} className="event-card">
               <div className="event-card__main-image-wrap">
                 <img

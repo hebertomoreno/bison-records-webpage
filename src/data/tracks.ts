@@ -6,6 +6,7 @@ export interface Track {
   description: string;
   duration: string | null;
   recordedAt: string | null;
+  hidden?: boolean;
 }
 
 // ── Edit tracks here (or run `npm run scan-audio` to regenerate) ────

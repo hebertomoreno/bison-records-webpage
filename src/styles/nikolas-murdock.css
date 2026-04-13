@@ -337,6 +337,15 @@
   color: #fff;
 }
 
+.nm-release__title-link {
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.nm-release__title-link:hover {
+  opacity: 0.7;
+}
+
 .nm-release__year {
   font-family: var(--font-cormorant);
   font-size: 15px;

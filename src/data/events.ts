@@ -6,6 +6,7 @@ export interface Event {
   images: string[];
   dates: string[];
   blogSlug?: string;
+  hidden?: boolean;
 }
 
 // ── Add events here ─────────────────────────────────────────────
