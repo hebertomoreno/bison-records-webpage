@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
+import { usePathname } from "next/navigation";
 import "../styles/navbar.css";
 import Link from "next/link";
 import { FiMenu, FiX } from "react-icons/fi";
@@ -12,12 +13,16 @@ interface NavItem {
 }
 
 export default function Navbar({ items }: { items: NavItem[] }) {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [navHidden, setNavHidden] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const hero = document.querySelector<HTMLElement>(".hero-wrapper");
-    if (!hero) return;
+    if (!hero) {
+      setNavHidden(false);
+      return;
+    }
 
     setNavHidden(true);
 
@@ -28,7 +33,7 @@ export default function Navbar({ items }: { items: NavItem[] }) {
     );
     observer.observe(hero);
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   return (
     <header className={`desktop-menu sticky top-0 z-50${navHidden ? " navbar--hidden" : ""}`}>
