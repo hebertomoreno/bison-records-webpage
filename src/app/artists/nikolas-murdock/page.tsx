@@ -7,6 +7,7 @@ import { getUpcomingReleases, getRecentReleases } from "../../../lib/db";
 import { getLocale } from "../../../lib/locale";
 import { t } from "../../../lib/translations";
 import NikolasHero from "../../../components/NikolasHero";
+import NmPhotosGallery from "../../../components/NmPhotosGallery";
 
 const videoIds = ["R8bXtWE1x30", "JovUdt6bPMU"];
 
@@ -195,25 +196,7 @@ export default async function NikolasMurdockPage() {
       <section id="photos">
         <div className="nm-section">
           <h2 className="nm-section__title">{tr.sections.photos}</h2>
-          <div className="nm-photos-grid">
-            {[
-              "M-6.jpg",
-              "M-10.jpg",
-              "M-22.jpg",
-              "M-43.jpg",
-              "M-89.jpg",
-              "M-100.jpg",
-              "45148807_769762566692084_4563012137609330688_n.jpg",
-            ].map((filename) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                key={filename}
-                src={`/media/images/NikMdkOfficialPhotos/${filename}`}
-                alt="Nikolas Murdock"
-                className="nm-photo"
-              />
-            ))}
-          </div>
+          <NmPhotosGallery />
         </div>
       </section>
 
