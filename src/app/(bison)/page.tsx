@@ -1,4 +1,5 @@
 import Hero from "../../components/Hero";
+import SideNavLink from "../../components/SideNavLink";
 import SomewhereButton from "../../components/SomewhereButton";
 import "../../styles/home.css";
 import { getUpcomingReleases, getRecentReleases, type ReleaseRow as Release } from "../../lib/db";
@@ -45,11 +46,24 @@ export default async function HomePage() {
     Promise.resolve(getUpcomingReleases()),
     Promise.resolve(getRecentReleases()),
   ]);
-  const { hero: heroTr, releases: releasesTr } = t(locale);
+  const { hero: heroTr, releases: releasesTr, nav: navTr } = t(locale);
+
+  const leftNav = [
+    { href: "/artists", label: navTr.artists, video: "/media/video/Landscapes/landscape1-opt.mp4" },
+    { href: "/videos", label: navTr.videos, video: "/media/video/Landscapes/landscape2-opt.mp4" },
+    { href: "/sounds", label: navTr.sounds, video: "/media/video/Landscapes/landscape3-opt.mp4" },
+  ];
+
+  const rightNav = [
+    { href: "/blog", label: navTr.blog, video: "/media/video/Landscapes/landscape4-opt.mp4" },
+    { href: "/events", label: navTr.events, video: "/media/video/Landscapes/landscape5-opt.mp4" },
+    { href: "/press", label: navTr.press, video: "/media/video/Landscapes/landscape6-opt.mp4" },
+  ];
 
   const slides = [
     {
       video: "/media/video/hero1",
+      logo: "/media/images/RecordsLogo.png",
       title: "Bison Records",
       subtitle: "Ars sola est digna occupatio",
       tagline: heroTr.tagline,
@@ -66,7 +80,21 @@ export default async function HomePage() {
 
   return (
     <div className="home-page">
-      <Hero slides={slides} />
+      <div className="hero-wrapper">
+        <nav className="hero-sidenav">
+          {leftNav.map((item) => (
+            <SideNavLink key={item.href} href={item.href} label={item.label} videoSrc={item.video} />
+          ))}
+        </nav>
+        <div className="hero-main">
+          <Hero slides={slides} />
+        </div>
+        <nav className="hero-sidenav">
+          {rightNav.map((item) => (
+            <SideNavLink key={item.href} href={item.href} label={item.label} videoSrc={item.video} />
+          ))}
+        </nav>
+      </div>
       <SomewhereButton />
       <div className="home-releases">
         <ReleaseGrid

@@ -67,15 +67,15 @@
 
 .hero-title-logo {
   display: block;
-  height: 200px;
-  width: auto;
+  width: min(420px, 65%);
+  height: auto;
   margin: 0 auto 16px;
-  filter: brightness(0) invert(1) drop-shadow(0 2px 24px rgba(0, 0, 0, 0.85));
+  filter: drop-shadow(0 2px 24px rgba(0, 0, 0, 0.85));
 }
 
 @media (max-width: 600px) {
   .hero-title-logo {
-    height: 100px;
+    width: min(260px, 80%);
   }
 }
 
@@ -166,8 +166,13 @@
   color: #fff;
 }
 
-.hero-arrow--prev { left: 1.25rem; }
-.hero-arrow--next { right: 1.25rem; }
+.hero-arrow--prev { left: calc(400px + 1.25rem); }
+.hero-arrow--next { right: calc(400px + 1.25rem); }
+
+@media (max-width: 1024px) {
+  .hero-arrow--prev { left: 1.25rem; }
+  .hero-arrow--next { right: 1.25rem; }
+}
 
 /* ── Dot navigation ── */
 .hero-dots {
