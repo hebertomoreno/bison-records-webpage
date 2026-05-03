@@ -8,7 +8,7 @@ import { getLocale } from "../../../lib/locale";
 import { t } from "../../../lib/translations";
 import NikolasHero from "../../../components/NikolasHero";
 
-const videoIds = ["dQw4w9WgXcQ", "eY52Zsg-KVI"];
+const videoIds = ["R8bXtWE1x30", "JovUdt6bPMU"];
 
 export default async function NikolasMurdockPage() {
   const locale = await getLocale();
@@ -48,7 +48,7 @@ export default async function NikolasMurdockPage() {
                   <div className="nm-releases__grid">
                     {allUpcoming.map((r) => (
                       <div key={`${r.artist}-${r.title}`} className="nm-release">
-                        <img src={r.image} alt={r.title} className="nm-release__cover" />
+                        <Link href={r.href}><img src={r.image} alt={r.title} className="nm-release__cover" /></Link>
                         <p className="nm-release__title">{r.title}</p>
                         <p className="nm-release__year">{r.date}<span className="nm-release__type">{r.release_type}</span></p>
                       </div>

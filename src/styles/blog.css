@@ -118,7 +118,7 @@
 /* Rendered markdown body */
 .blog-post__body {
   font-family: var(--font-cormorant);
-  font-size: 21px;
+  font-size: 24px;
   font-weight: 400;
   line-height: 1.75;
   color: color-mix(in srgb, var(--foreground) 85%, transparent);
@@ -176,7 +176,7 @@
 }
 
 .blog-post__body .footnotes li {
-  font-size: 15px;
+  font-size: 20px;
   line-height: 1.6;
   color: color-mix(in srgb, var(--foreground) 55%, transparent);
   margin-bottom: 0.4rem;
@@ -188,11 +188,11 @@
 
 /* inline superscript reference */
 .blog-post__body sup a {
-  font-size: 11px;
+  font-size: 14px;
   font-style: normal;
   letter-spacing: 0;
   border-bottom: none;
-  color: color-mix(in srgb, var(--foreground) 55%, transparent);
+  color: #7a9e7e;
 }
 
 .blog-post__body strong {
@@ -222,6 +222,6 @@
   }
 
   .blog-post__body {
-    font-size: 18px;
+    font-size: 21px;
   }
 }

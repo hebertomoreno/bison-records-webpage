@@ -15,7 +15,7 @@ export const upcomingReleases: Release[] = [
     title: "Earth 2",
     date: "May 5, 2026",
     image: "/media/images/Earth2CoverDenisse.jpeg",
-    href: "/artists/nikolas-murdock",
+    href: "/blog/earth-2",
     release_type: "Single",
   },
   {
@@ -23,7 +23,7 @@ export const upcomingReleases: Release[] = [
     title: "Uhhh... Sure... Ok?",
     date: "June 1, 2026",
     image: "/media/images/UhSureOkCover.jpg",
-    href: "/artists/nikolas-murdock",
+    href: "/blog/uhhh-sure-ok",
     release_type: "EP",
   },
   {
@@ -31,7 +31,7 @@ export const upcomingReleases: Release[] = [
     title: "Year Of The Brown Bear",
     date: "November 2026",
     image: "/media/images/bear1.jpg",
-    href: "/artists/nikolas-murdock",
+    href: "/blog/year-of-the-brown-bear-album",
     release_type: "Album",
   },
 ];
