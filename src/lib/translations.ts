@@ -55,6 +55,7 @@ export const translations = {
         about: "Bio",
         shows: "Shows",
         videos: "Videos",
+        photos: "Photos",
         contact: "Contact",
       },
       hero: {
@@ -66,6 +67,7 @@ export const translations = {
         about: "Bio",
         shows: "Shows",
         videos: "Videos",
+        photos: "Photos",
         contact: "Contact",
       },
       music: {
@@ -144,6 +146,7 @@ export const translations = {
         about: "Bio",
         shows: "Fechas",
         videos: "Videos",
+        photos: "Fotos",
         contact: "Contacto",
       },
       hero: {
@@ -155,6 +158,7 @@ export const translations = {
         about: "Bio",
         shows: "Fechas",
         videos: "Videos",
+        photos: "Fotos",
         contact: "Contacto",
       },
       music: {

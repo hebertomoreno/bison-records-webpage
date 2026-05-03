@@ -21,6 +21,7 @@ export default async function NikolasLayout({
     { key: "about", label: tr.nikolas.nav.about },
     { key: "shows", label: tr.nikolas.nav.shows },
     { key: "videos", label: tr.nikolas.nav.videos },
+    { key: "photos", label: tr.nikolas.nav.photos },
     { key: "contact", label: tr.nikolas.nav.contact },
   ];
 

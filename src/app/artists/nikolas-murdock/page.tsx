@@ -191,6 +191,34 @@ export default async function NikolasMurdockPage() {
 
       <div className="nm-divider" />
 
+      {/* ── Photos ── */}
+      <section id="photos">
+        <div className="nm-section">
+          <h2 className="nm-section__title">{tr.sections.photos}</h2>
+          <div className="nm-photos-grid">
+            {[
+              "M-6.jpg",
+              "M-10.jpg",
+              "M-22.jpg",
+              "M-43.jpg",
+              "M-89.jpg",
+              "M-100.jpg",
+              "45148807_769762566692084_4563012137609330688_n.jpg",
+            ].map((filename) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={filename}
+                src={`/media/images/NikMdkOfficialPhotos/${filename}`}
+                alt="Nikolas Murdock"
+                className="nm-photo"
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="nm-divider" />
+
       {/* ── Contact ── */}
       <section id="contact">
         <div className="nm-section">
