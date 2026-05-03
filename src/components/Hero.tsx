@@ -57,7 +57,7 @@ export default function Hero({ slides }: { slides: Slide[] }) {
           <div className="hero-slide__overlay" />
           <div className="hero-content">
             {slide.artist && <p className="hero-artist">{slide.artist}</p>}
-            {slide.logo && (
+            {slide.logo ? (
               <Image
                 src={slide.logo}
                 alt={slide.title}
@@ -65,8 +65,9 @@ export default function Hero({ slides }: { slides: Slide[] }) {
                 width={600}
                 className="hero-title-logo"
               />
+            ) : (
+              <p className="hero-title">{slide.title}</p>
             )}
-            <p className="hero-title">{slide.title}</p>
             {slide.subtitle && <p className="hero-subtitle">{slide.subtitle}</p>}
             {slide.tagline && <p className="hero-tagline">{slide.tagline}</p>}
             {slide.buttons && (

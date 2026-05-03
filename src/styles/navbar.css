@@ -4,12 +4,36 @@
   background: black;
   width: 100%;
   z-index: 50;
+  overflow: hidden;
+  max-height: 200px;
+  opacity: 1;
+  transition: max-height 0.35s ease, opacity 0.35s ease;
+}
+
+.navbar--hidden {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .navbar-inner {
   width: 70%;
   margin: 0 auto;
   min-height: 114px;
+}
+
+.navbar-logo__compact {
+  display: none;
+}
+
+@media (max-width: 1440px) {
+  .navbar-logo__full {
+    display: none;
+  }
+
+  .navbar-logo__compact {
+    display: block;
+  }
 }
 
 .menu-item li {
@@ -36,11 +60,6 @@
     width: 100%;
     padding: 1rem;
     min-height: auto;
-  }
-
-  .navbar-logo img {
-    width: 150px !important;
-    height: auto !important;
   }
 
   .nav-dropdown {
