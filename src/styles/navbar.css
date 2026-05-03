@@ -34,7 +34,7 @@
 @media (max-width: 767px) {
   .navbar-inner {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 1rem;
     min-height: auto;
   }
 

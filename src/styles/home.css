@@ -19,7 +19,7 @@
 @media (max-width: 767px) {
   .home-releases {
     grid-template-columns: 1fr;
-    padding: 3rem 1.25rem;
+    padding: 3rem 1.5rem;
   }
 
   .home-releases__divider {
@@ -63,7 +63,7 @@
 .upcoming__release {
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
+  gap: 0;
 }
 
 .upcoming__cover {
