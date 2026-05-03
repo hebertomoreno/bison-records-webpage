@@ -44,7 +44,7 @@ export default function AdminBlogList() {
           {posts.map((p) => (
             <div key={p.slug} className="adm-list-item">
               <div>
-                <div className="adm-list-item__title">{p.title}</div>
+                <Link href={`/admin/blog/${p.slug}`} className="adm-list-item__title">{p.title}</Link>
                 <div className="adm-list-item__meta">{p.date}{p.author ? ` · ${p.author}` : ""}</div>
               </div>
               <div className="adm-list-item__actions">

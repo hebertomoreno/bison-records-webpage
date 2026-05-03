@@ -13,6 +13,7 @@ export interface PostMeta {
   date: string;
   author: string;
   excerpt: string;
+  image?: string;
   hidden?: boolean;
 }
 
@@ -35,6 +36,7 @@ export function getAllPosts(): PostMeta[] {
         date: data.date ?? "",
         author: data.author ?? "",
         excerpt: data.excerpt ?? "",
+        image: data.image ?? undefined,
         hidden: data.hidden === true || data.hidden === "true",
       };
     })

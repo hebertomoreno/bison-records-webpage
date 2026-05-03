@@ -2,6 +2,7 @@
 title: Earth 2
 date: 2026-05-03
 author: Nikolas Murdock
+image: /media/images/Earth2CoverDenisse.jpeg
 ---
 
 ![The cover for Earth 2.](/media/images/Earth2CoverDenisse.jpeg)

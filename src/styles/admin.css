@@ -133,8 +133,13 @@
 
 .adm-list-item__title {
   font-weight: 600;
-  font-size: 14px;
+  font-size: 21px;
   color: #18181b;
+  text-decoration: none;
+}
+
+a.adm-list-item__title:hover {
+  text-decoration: underline;
 }
 
 .adm-list-item__meta {
