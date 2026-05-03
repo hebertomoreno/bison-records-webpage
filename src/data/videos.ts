@@ -36,12 +36,4 @@ export const videos: Video[] = [
     file: "/media/video/facesplaces",
     preview: "/media/video/facesplaces-preview.gif",
   },
-  {
-    id: "dQw4w9WgXcQ",
-    title: "Never Gonna Give You Up",
-    author: "Rick Astley",
-    description: "You know this one.",
-    type: "youtube",
-    youtubeId: "dQw4w9WgXcQ",
-  },
 ];
