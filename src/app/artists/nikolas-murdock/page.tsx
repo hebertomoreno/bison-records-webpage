@@ -32,7 +32,6 @@ export default async function NikolasMurdockPage() {
 
   return (
     <div className="nm-page">
-
       {/* ── Hero ── */}
       <NikolasHero release={tr.hero.release} cta={tr.hero.cta} />
 
@@ -49,9 +48,14 @@ export default async function NikolasMurdockPage() {
                   <div className="nm-releases__grid">
                     {allUpcoming.map((r) => (
                       <div key={`${r.artist}-${r.title}`} className="nm-release">
-                        <Link href={r.href}><img src={r.image} alt={r.title} className="nm-release__cover" /></Link>
+                        <Link href={r.href}>
+                          <img src={r.image} alt={r.title} className="nm-release__cover" />
+                        </Link>
                         <p className="nm-release__title">{r.title}</p>
-                        <p className="nm-release__year">{r.date}<span className="nm-release__type">{r.release_type}</span></p>
+                        <p className="nm-release__year">
+                          {r.date}
+                          <span className="nm-release__type">{r.release_type}</span>
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -65,7 +69,10 @@ export default async function NikolasMurdockPage() {
                       <div key={`${r.artist}-${r.title}`} className="nm-release">
                         <img src={r.image} alt={r.title} className="nm-release__cover" />
                         <p className="nm-release__title">{r.title}</p>
-                        <p className="nm-release__year">{r.date}<span className="nm-release__type">{r.release_type}</span></p>
+                        <p className="nm-release__year">
+                          {r.date}
+                          <span className="nm-release__type">{r.release_type}</span>
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -81,40 +88,54 @@ export default async function NikolasMurdockPage() {
       <section id="music">
         <div className="nm-section">
           <h2 className="nm-section__title">{tr.sections.music}</h2>
-          {(() => { const visibleAlbums = albums.filter((a) => !albumDetails.find((d) => d.spotifyId === a.spotifyId)?.hidden); return visibleAlbums.length > 0 ? (
-            <div className="nm-music-grid">
-              {visibleAlbums.map((album) => (
-                <div key={album.spotifyId} className="nm-release">
-                  <Link href={`/artists/nikolas-murdock/music/${album.spotifyId}`}>
-                    <img
-                      src={album.image}
-                      alt={album.name}
-                      className="nm-release__cover"
-                    />
-                  </Link>
-                  <Link href={`/artists/nikolas-murdock/music/${album.spotifyId}`} className="nm-release__title-link">
-                    <p className="nm-release__title">{album.name}</p>
-                  </Link>
-                  <p className="nm-release__year">
-                    {album.releaseDate.slice(0, 4)}
-                    <span className="nm-release__type">{album.albumType}</span>
-                  </p>
-                  <div className="nm-release__links">
-                    <a href={album.spotifyUrl} target="_blank" rel="noopener noreferrer" className="nm-release__link">
-                      Spotify →
-                    </a>
-                    {album.appleMusicUrl && (
-                      <a href={album.appleMusicUrl} target="_blank" rel="noopener noreferrer" className="nm-release__link">
-                        Apple Music →
+          {(() => {
+            const visibleAlbums = albums.filter(
+              (a) => !albumDetails.find((d) => d.spotifyId === a.spotifyId)?.hidden
+            );
+            return visibleAlbums.length > 0 ? (
+              <div className="nm-music-grid">
+                {visibleAlbums.map((album) => (
+                  <div key={album.spotifyId} className="nm-release">
+                    <Link href={`/artists/nikolas-murdock/music/${album.spotifyId}`}>
+                      <img src={album.image} alt={album.name} className="nm-release__cover" />
+                    </Link>
+                    <Link
+                      href={`/artists/nikolas-murdock/music/${album.spotifyId}`}
+                      className="nm-release__title-link"
+                    >
+                      <p className="nm-release__title">{album.name}</p>
+                    </Link>
+                    <p className="nm-release__year">
+                      {album.releaseDate.slice(0, 4)}
+                      <span className="nm-release__type">{album.albumType}</span>
+                    </p>
+                    <div className="nm-release__links">
+                      <a
+                        href={album.spotifyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="nm-release__link"
+                      >
+                        Spotify →
                       </a>
-                    )}
+                      {album.appleMusicUrl && (
+                        <a
+                          href={album.appleMusicUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="nm-release__link"
+                        >
+                          Apple Music →
+                        </a>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="nm-music-empty">{tr.music.empty}</p>
-          ); })()}
+                ))}
+              </div>
+            ) : (
+              <p className="nm-music-empty">{tr.music.empty}</p>
+            );
+          })()}
         </div>
       </section>
 
@@ -141,33 +162,11 @@ export default async function NikolasMurdockPage() {
 
       <div className="nm-divider" />
 
-      {/* ── Shows ── */}
-      <section id="shows">
+      {/* ── Photos ── */}
+      <section id="photos">
         <div className="nm-section">
-          <h2 className="nm-section__title">{tr.sections.shows}</h2>
-          {events.length > 0 ? (
-            <div className="nm-shows-list">
-              {events.map((event) => {
-                const ticket = event.offers.find((o) => o.type === "Tickets");
-                return (
-                  <div key={event.id} className="nm-show">
-                    <span className="nm-show__date">{formatEventDate(event.datetime)}</span>
-                    <span className="nm-show__venue">
-                      {event.venue.name}
-                      <span className="nm-show__city">{event.venue.city}, {event.venue.region || event.venue.country}</span>
-                    </span>
-                    {ticket && (
-                      <a href={ticket.url} target="_blank" rel="noopener noreferrer" className="nm-show__ticket">
-                        {ticket.status === "sold_out" ? tr.shows.soldOut : tr.shows.tickets}
-                      </a>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <p className="nm-music-empty">{tr.shows.empty}</p>
-          )}
+          <h2 className="nm-section__title">{tr.sections.photos}</h2>
+          <NmPhotosGallery />
         </div>
       </section>
 
@@ -192,11 +191,40 @@ export default async function NikolasMurdockPage() {
 
       <div className="nm-divider" />
 
-      {/* ── Photos ── */}
-      <section id="photos">
+      {/* ── Shows ── */}
+      <section id="shows">
         <div className="nm-section">
-          <h2 className="nm-section__title">{tr.sections.photos}</h2>
-          <NmPhotosGallery />
+          <h2 className="nm-section__title">{tr.sections.shows}</h2>
+          {events.length > 0 ? (
+            <div className="nm-shows-list">
+              {events.map((event) => {
+                const ticket = event.offers.find((o) => o.type === "Tickets");
+                return (
+                  <div key={event.id} className="nm-show">
+                    <span className="nm-show__date">{formatEventDate(event.datetime)}</span>
+                    <span className="nm-show__venue">
+                      {event.venue.name}
+                      <span className="nm-show__city">
+                        {event.venue.city}, {event.venue.region || event.venue.country}
+                      </span>
+                    </span>
+                    {ticket && (
+                      <a
+                        href={ticket.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="nm-show__ticket"
+                      >
+                        {ticket.status === "sold_out" ? tr.shows.soldOut : tr.shows.tickets}
+                      </a>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="nm-music-empty">{tr.shows.empty}</p>
+          )}
         </div>
       </section>
 
@@ -214,7 +242,6 @@ export default async function NikolasMurdockPage() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }
