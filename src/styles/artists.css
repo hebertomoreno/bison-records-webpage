@@ -1,5 +1,5 @@
 .artists-page {
-  padding: 8rem 2rem 2rem;
+  padding: 1rem 2rem 2rem;
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -17,7 +17,6 @@
 .artists-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
 }
 
 .artist-tile {
@@ -30,7 +29,9 @@
   background-size: cover;
   background-position: center;
   text-decoration: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .artist-tile:hover {
@@ -41,12 +42,22 @@
 .artist-tile__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.1) 60%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.1) 60%,
+    transparent 100%
+  );
   transition: background 0.3s ease;
 }
 
 .artist-tile:hover .artist-tile__overlay {
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.2) 60%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.2) 60%,
+    transparent 100%
+  );
 }
 
 .artist-tile__name {
