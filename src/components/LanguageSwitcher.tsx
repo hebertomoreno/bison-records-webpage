@@ -1,15 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../styles/language-switcher.css";
 
-export default function LanguageSwitcher() {
-  const [current, setCurrent] = useState<"en" | "es">("en");
-
-  useEffect(() => {
-    const match = document.cookie.match(/(?:^|;\s*)locale=([^;]*)/);
-    if (match?.[1] === "es") setCurrent("es");
-  }, []);
+export default function LanguageSwitcher({ locale = "en" }: { locale?: "en" | "es" }) {
+  const [current, setCurrent] = useState<"en" | "es">(locale);
 
   function handleSwitch(locale: "en" | "es") {
     if (locale === current) return;

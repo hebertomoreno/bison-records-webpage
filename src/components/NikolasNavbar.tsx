@@ -12,7 +12,7 @@ interface NavItem {
   label: string;
 }
 
-export default function NikolasNavbar({ items }: { items: NavItem[] }) {
+export default function NikolasNavbar({ items, locale = "en" }: { items: NavItem[]; locale?: "en" | "es" }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -41,7 +41,7 @@ export default function NikolasNavbar({ items }: { items: NavItem[] }) {
                 </a>
               </li>
             ))}
-            <li><LanguageSwitcher /></li>
+            <li><LanguageSwitcher locale={locale} /></li>
           </ul>
         </nav>
       </div>

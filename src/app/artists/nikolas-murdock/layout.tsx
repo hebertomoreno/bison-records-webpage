@@ -27,7 +27,7 @@ export default async function NikolasLayout({
 
   return (
     <div className="site-layout">
-      <NikolasNavbar items={items} />
+      <NikolasNavbar items={items} locale={locale} />
       <main>
         {children}
         <footer className="nm-footer">

@@ -7,7 +7,9 @@
   overflow: hidden;
   max-height: 200px;
   opacity: 1;
-  transition: max-height 0.35s ease, opacity 0.35s ease;
+  transition:
+    max-height 0.35s ease,
+    opacity 0.35s ease;
 }
 
 .navbar--hidden {
@@ -26,7 +28,7 @@
   display: none;
 }
 
-@media (max-width: 1440px) {
+@media (max-width: 767px) {
   .navbar-logo__full {
     display: none;
   }
@@ -43,23 +45,46 @@
 .menu-item {
   color: white;
   font-family: var(--font-cormorant);
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 2.5px;
   text-transform: uppercase;
 }
 
+/* ── Hamburger ── */
+.navbar-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0;
+}
+
 /* ── Dropdown animation ── */
 .nav-dropdown {
-  /* desktop: inline */
   display: flex;
 }
 
-@media (max-width: 767px) {
+.nav-dropdown ul {
+  flex-direction: row;
+}
+
+@media (max-width: 1024px) {
+  .navbar--hidden {
+    max-height: 200px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   .navbar-inner {
     width: 100%;
     padding: 1rem;
     min-height: auto;
+  }
+
+  .navbar-hamburger {
+    display: block;
   }
 
   .nav-dropdown {
@@ -71,7 +96,9 @@
     opacity: 0;
     transform: translateY(-8px);
     pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
   }
 
   .nav-dropdown--open {

@@ -24,7 +24,7 @@ export default async function BisonLayout({
 
   return (
     <div className="site-layout">
-      <Navbar items={items} />
+      <Navbar items={items} locale={locale} />
       <main>
         {children}
         <Footer />
