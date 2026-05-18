@@ -85,10 +85,10 @@ export default function Hero({ slides }: { slides: Slide[] }) {
 
       {/* Arrows */}
       <button className="hero-arrow hero-arrow--prev" onClick={prev} aria-label="Previous slide">
-        <FiChevronLeft size={28} />
+        <FiChevronLeft size={80} />
       </button>
       <button className="hero-arrow hero-arrow--next" onClick={next} aria-label="Next slide">
-        <FiChevronRight size={28} />
+        <FiChevronRight size={80} />
       </button>
 
       {/* Dot navigation */}

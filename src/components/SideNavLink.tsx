@@ -13,25 +13,25 @@ export default function SideNavLink({
   videoSrc: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const playPromise = useRef<Promise<void> | null>(null);
 
   const handleMouseEnter = () => {
     const video = videoRef.current;
     if (!video) return;
     video.currentTime = 0;
-    video.play();
+    playPromise.current = video.play();
   };
 
   const handleMouseLeave = () => {
     const video = videoRef.current;
     if (!video) return;
-    video.pause();
-    video.currentTime = 0;
-  };
-
-  const handleTimeUpdate = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (video.currentTime >= 5) video.currentTime = 0;
+    const stop = () => { video.pause(); video.currentTime = 0; };
+    if (playPromise.current) {
+      playPromise.current.then(stop).catch(() => {});
+      playPromise.current = null;
+    } else {
+      stop();
+    }
   };
 
   return (
@@ -46,8 +46,8 @@ export default function SideNavLink({
         className="hero-sidenav__video"
         muted
         playsInline
+        loop
         preload="metadata"
-        onTimeUpdate={handleTimeUpdate}
       >
         <source src={videoSrc} type="video/mp4" />
       </video>

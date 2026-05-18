@@ -7,6 +7,12 @@
   overflow: hidden;
 }
 
+@media (max-width: 1024px) {
+  .hero-carousel {
+    height: 80vh;
+  }
+}
+
 /* ── Slides ── */
 .hero-slide {
   position: absolute;
@@ -61,7 +67,9 @@
   line-height: 1;
   letter-spacing: 1px;
   color: #fff;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.85), 0 0 60px rgba(0, 0, 0, 0.4);
+  text-shadow:
+    0 2px 24px rgba(0, 0, 0, 0.85),
+    0 0 60px rgba(0, 0, 0, 0.4);
   margin-bottom: 16px;
 }
 
@@ -117,11 +125,14 @@
 /* ── Buttons ── */
 .black-button {
   display: flex;
-  padding: 16px 24px;
+  padding: 16px 36px;
+  min-width: 360px;
   justify-content: center;
   align-items: center;
   gap: 8px;
-  border-radius: 4px;
+  border-width: 1px;
+  border-radius: 20px;
+  border-color: white;
   background: #000;
   font-family: var(--font-cormorant);
   font-size: 15px;
@@ -160,18 +171,38 @@
   cursor: pointer;
   transition: color 0.2s ease;
   padding: 0;
+  filter: drop-shadow(0 1px 6px rgba(0, 0, 0, 0.9));
 }
 
 .hero-arrow:hover {
   color: #fff;
 }
 
-.hero-arrow--prev { left: calc(400px + 1.5rem); }
-.hero-arrow--next { right: calc(400px + 1.5rem); }
+.hero-arrow--prev {
+  left: calc(30% + 1.5rem);
+}
+.hero-arrow--next {
+  right: calc(30% + 1.5rem);
+}
+
+/* Scale arrows down at intermediate desktop widths where the visible
+   center (40% of viewport) is too narrow for 112px icons */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .hero-arrow--prev { left: calc(30% + 0.25rem); }
+  .hero-arrow--next { right: calc(30% + 0.25rem); }
+  .hero-arrow svg {
+    width: 48px;
+    height: 48px;
+  }
+}
 
 @media (max-width: 1024px) {
-  .hero-arrow--prev { left: 1.5rem; }
-  .hero-arrow--next { right: 1.5rem; }
+  .hero-arrow--prev {
+    left: 1.5rem;
+  }
+  .hero-arrow--next {
+    right: 1.5rem;
+  }
 }
 
 /* ── Dot navigation ── */
@@ -193,7 +224,9 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  transition: background 0.25s ease, transform 0.25s ease;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
 }
 
 .hero-dot:hover {
@@ -226,7 +259,7 @@
 
   .black-button {
     font-size: 12px;
-    padding: 8px 16px;
+    padding: 8px 24px;
     letter-spacing: 1.5px;
   }
 }
