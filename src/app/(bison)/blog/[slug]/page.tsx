@@ -10,7 +10,8 @@ export async function generateStaticParams() {
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [post, locale] = await Promise.all([getPost(slug), getLocale()]);
+  const locale = await getLocale();
+  const post = await getPost(slug, locale);
   const tr = t(locale);
 
   return (

@@ -37,5 +37,12 @@ export const upcomingReleases: Release[] = [
 ];
 
 export const recentReleases: Release[] = [
-  // Add recent releases here
+  {
+    artist: "Nube Render feat. OZOZOZ",
+    title: "Río Lerma",
+    date: "August 1, 2024",
+    image: "https://i.scdn.co/image/ab67616d0000b27377ad47ab7f337287528a7295",
+    href: "https://open.spotify.com/album/6JqcOP54cLzUsq6sJ6FIZs",
+    release_type: "Single",
+  },
 ];

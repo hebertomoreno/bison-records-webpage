@@ -1,0 +1,122 @@
+.ap-page {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+}
+
+.ap-photo-wrap {
+  width: 100%;
+  height: 75vh;
+  overflow: hidden;
+}
+
+.ap-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.ap-content {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 5rem;
+  text-align: center;
+}
+
+.ap-name {
+  font-family: var(--font-cormorant);
+  font-size: 56px;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  line-height: 1;
+}
+
+.ap-bio {
+  font-family: var(--font-cormorant);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.82);
+  white-space: pre-line;
+}
+
+/* ── Releases ── */
+.ap-releases {
+  padding: 0 2rem 5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.ap-releases__group + .ap-releases__group {
+  margin-top: 3rem;
+}
+
+.ap-releases__heading {
+  font-family: var(--font-cormorant);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 1.5rem;
+}
+
+.ap-releases__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1.5rem;
+}
+
+.ap-release__cover {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.ap-release__cover:hover {
+  opacity: 0.8;
+}
+
+.ap-release__title {
+  font-family: var(--font-cormorant);
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  margin-top: 0.6rem;
+  line-height: 1.3;
+}
+
+.ap-release__meta {
+  font-family: var(--font-cormorant);
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 0.25rem;
+}
+
+.ap-release__type {
+  margin-left: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 11px;
+}
+
+@media (max-width: 600px) {
+  .ap-photo-wrap {
+    height: 55vh;
+  }
+
+  .ap-name {
+    font-size: 38px;
+  }
+
+  .ap-bio {
+    font-size: 17px;
+  }
+}

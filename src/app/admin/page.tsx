@@ -38,6 +38,11 @@ export default function AdminDashboard() {
           <div className="adm-dashboard-card__title">Uploads</div>
           <div className="adm-dashboard-card__desc">Upload audio files and images</div>
         </Link>
+        <Link href="/admin/artists" className="adm-dashboard-card">
+          <div className="adm-dashboard-card__icon">🎤</div>
+          <div className="adm-dashboard-card__title">Artists</div>
+          <div className="adm-dashboard-card__desc">Add and edit artist profiles and bios</div>
+        </Link>
       </div>
     </div>
   );

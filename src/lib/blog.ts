@@ -23,7 +23,7 @@ export interface Post extends PostMeta {
 
 export function getAllPosts(): PostMeta[] {
   if (!fs.existsSync(BLOG_DIR)) return [];
-  const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".md"));
+  const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".md") && !/\.[a-z]{2}\.md$/.test(f));
 
   return files
     .map((filename) => {
@@ -44,8 +44,10 @@ export function getAllPosts(): PostMeta[] {
     .sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-export async function getPost(slug: string): Promise<Post> {
-  const raw = fs.readFileSync(path.join(BLOG_DIR, `${slug}.md`), "utf8");
+export async function getPost(slug: string, locale?: string): Promise<Post> {
+  const localePath = locale && locale !== "en" ? path.join(BLOG_DIR, `${slug}.${locale}.md`) : null;
+  const filePath = localePath && fs.existsSync(localePath) ? localePath : path.join(BLOG_DIR, `${slug}.md`);
+  const raw = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(raw);
   const processed = await remark().use(remarkGfm).use(remarkHtml, { sanitize: false }).process(content);
 
