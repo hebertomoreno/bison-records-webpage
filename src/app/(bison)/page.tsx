@@ -62,7 +62,7 @@ export default async function HomePage() {
 
   const slides = [
     {
-      video: "/media/video/hero1",
+      video: "/media/video/HeroBison1",
       logo: "/media/images/RecordsLogo.png",
       title: "Bison Records",
       subtitle: "Ars sola est digna occupatio",
@@ -70,7 +70,7 @@ export default async function HomePage() {
       buttons: [{ label: heroTr.ourArtists, href: "/artists" }],
     },
     {
-      image: "/media/images/bear1.jpg",
+      video: "/media/video/HeroBear1",
       logo: "/media/images/NikMDkLogo.png",
       title: "Year Of The Brown Bear",
       subtitle: heroTr.nikolasSubtitle,

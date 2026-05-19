@@ -18,8 +18,10 @@ export default function Navbar({ items, locale = "en" }: { items: NavItem[]; loc
   const [navHidden, setNavHidden] = useState(false);
 
   useLayoutEffect(() => {
-    const hero = document.querySelector<HTMLElement>(".hero-wrapper");
     const scrollEl = document.querySelector<HTMLElement>(".site-layout > main");
+    if (scrollEl) scrollEl.scrollTop = 0;
+
+    const hero = document.querySelector<HTMLElement>(".hero-wrapper");
 
     if (!hero || !scrollEl) {
       setNavHidden(false);

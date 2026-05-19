@@ -32,6 +32,12 @@ export const translations = {
       empty: "No upcoming events.",
       readPost: "Read the post",
     },
+    contact: {
+      heading: "Contact",
+      bookings: "Bookings & General",
+      press: "Press",
+      phone: "Phone",
+    },
     hero: {
       tagline: "Since 2014",
       ourArtists: "Our Artists",
@@ -122,6 +128,12 @@ export const translations = {
       heading: "Eventos",
       empty: "Sin eventos próximos.",
       readPost: "Leer la entrada",
+    },
+    contact: {
+      heading: "Contacto",
+      bookings: "Bookings y General",
+      press: "Prensa",
+      phone: "Teléfono",
     },
     hero: {
       tagline: "Desde 2014",

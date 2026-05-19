@@ -52,6 +52,7 @@ export default function Hero({ slides }: { slides: Slide[] }) {
             <video className="hero-slide__video" autoPlay muted loop playsInline>
               <source src={`${slide.video}.webm`} type="video/webm" />
               <source src={`${slide.video}-opt.mp4`} type="video/mp4" />
+              <source src={`${slide.video}.mp4`} type="video/mp4" />
             </video>
           )}
           <div className="hero-slide__overlay" />
