@@ -14,6 +14,16 @@ export interface Album {
 
 export const albums: Album[] = [
   {
+    spotifyId: "6bR1vJNRu2sLnZaGM1Cg3d",
+    name: "Earth 2",
+    releaseDate: "2026-05-29",
+    albumType: "single",
+    totalTracks: 1,
+    image: "https://i.scdn.co/image/ab67616d0000b2736471e5550256ec764bd216c9",
+    spotifyUrl: "https://open.spotify.com/album/6bR1vJNRu2sLnZaGM1Cg3d",
+    appleMusicUrl: null,
+  },
+  {
     spotifyId: "6zFrZVkqqDiskxTjfsZUO9",
     name: "Whatever This Is",
     releaseDate: "2024-11-05",
@@ -72,6 +82,16 @@ export const albums: Album[] = [
     image: "https://i.scdn.co/image/ab67616d0000b273d17172323b8476aec49c3bfb",
     spotifyUrl: "https://open.spotify.com/album/1kspOEPD3hw96Dta3ZUpIo",
     appleMusicUrl: "https://music.apple.com/us/album/how-can-i-miss-you-single/1519842336?uo=4",
+  },
+  {
+    spotifyId: "748GPG5b17A4iUxfcm56Oj",
+    name: "Dread",
+    releaseDate: "2019-12-14",
+    albumType: "single",
+    totalTracks: 1,
+    image: "https://i.scdn.co/image/ab67616d0000b27330996434eb37f07e2eb01030",
+    spotifyUrl: "https://open.spotify.com/album/748GPG5b17A4iUxfcm56Oj",
+    appleMusicUrl: "https://music.apple.com/us/album/dread-single/1492018055?uo=4",
   },
   {
     spotifyId: "1U6Dlny3JRhSMuDADrSOX7",

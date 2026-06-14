@@ -27,12 +27,10 @@ const csp = [
 ].join("; ");
 
 const nextConfig: NextConfig = {
-  experimental: {
-    outputFileTracingExcludes: {
-      // The upload route accesses public/media at runtime via fs — without this,
-      // Next.js traces the entire 400MB media directory into the function bundle.
-      "/api/admin/upload": ["./public/media/**/*"],
-    },
+  // The upload route accesses public/media at runtime via fs — without this,
+  // Next.js traces the entire 400MB media directory into the function bundle.
+  outputFileTracingExcludes: {
+    "/api/admin/upload": ["./public/media/**/*"],
   },
   async headers() {
     return [
