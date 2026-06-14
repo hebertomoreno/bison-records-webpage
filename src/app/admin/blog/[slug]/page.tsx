@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
-const EMPTY = { title: "", date: new Date().toISOString().slice(0, 10), author: "", excerpt: "", body: "" };
+const EMPTY = { title: "", date: new Date().toISOString().slice(0, 10), author: "", excerpt: "", body: "", language: "en" };
 
 export default function BlogEditor() {
   const { slug } = useParams<{ slug: string }>();
@@ -17,7 +17,7 @@ export default function BlogEditor() {
   useEffect(() => {
     if (isNew) return;
     fetch(`/api/admin/blog/${slug}`).then((r) => r.json()).then((d) => {
-      setForm({ title: d.title, date: d.date, author: d.author, excerpt: d.excerpt, body: d.body });
+      setForm({ title: d.title, date: d.date, author: d.author, excerpt: d.excerpt, body: d.body, language: d.language ?? "en" });
     });
   }, [slug]);
 
@@ -63,6 +63,13 @@ export default function BlogEditor() {
           <div className="adm-field">
             <label>Date</label>
             <input type="date" value={form.date} onChange={(e) => set("date", e.target.value)} />
+          </div>
+          <div className="adm-field">
+            <label>Language</label>
+            <select value={form.language} onChange={(e) => set("language", e.target.value)}>
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
+            </select>
           </div>
         </div>
 

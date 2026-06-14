@@ -2,7 +2,6 @@
 title: Earth 2
 date: 2026-05-03
 author: Nikolas Murdock
-image: /media/images/Earth2CoverDenisse.jpeg
 language: English
 ---
 
