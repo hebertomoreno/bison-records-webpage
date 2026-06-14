@@ -2,14 +2,10 @@ import { NextRequest } from "next/server";
 import fs from "fs";
 import path from "path";
 
-function devOnly() {
+export async function POST(req: NextRequest) {
   if (process.env.NODE_ENV !== "development") {
     return Response.json({ error: "Not available" }, { status: 403 });
   }
-}
-
-export async function POST(req: NextRequest) {
-  devOnly();
   const form = await req.formData();
   const file = form.get("file") as File | null;
   const dest = (form.get("dest") as string) ?? "images"; // "images" | "audio" | "video"
