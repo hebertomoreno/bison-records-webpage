@@ -21,18 +21,24 @@ export default function Navbar({ items, locale = "en" }: { items: NavItem[]; loc
     const scrollEl = document.querySelector<HTMLElement>(".site-layout > main");
     if (scrollEl) scrollEl.scrollTop = 0;
 
-    const hero = document.querySelector<HTMLElement>(".hero-wrapper");
+    let removeListener: (() => void) | null = null;
 
-    if (!hero || !scrollEl) {
-      setNavHidden(false);
-      return;
-    }
+    const rafId = requestAnimationFrame(() => {
+      const hero = document.querySelector<HTMLElement>(".hero-wrapper");
+      if (!hero || !scrollEl) {
+        setNavHidden(false);
+        return;
+      }
+      const update = () => setNavHidden(scrollEl.scrollTop < hero.offsetHeight);
+      update();
+      scrollEl.addEventListener("scroll", update, { passive: true });
+      removeListener = () => scrollEl.removeEventListener("scroll", update);
+    });
 
-    const update = () => setNavHidden(scrollEl.scrollTop < hero.offsetHeight);
-
-    update();
-    scrollEl.addEventListener("scroll", update, { passive: true });
-    return () => scrollEl.removeEventListener("scroll", update);
+    return () => {
+      cancelAnimationFrame(rafId);
+      removeListener?.();
+    };
   }, [pathname]);
 
   return (
