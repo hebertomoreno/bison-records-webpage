@@ -3,6 +3,7 @@ title: Earth 2
 date: 2026-05-03
 author: Nikolas Murdock
 image: /media/images/Earth2CoverDenisse.jpeg
+language: Spanish
 ---
 
 ![La portada de Earth 2.](/media/images/Earth2CoverDenisse.jpeg)
@@ -23,4 +24,5 @@ La letra llegó fácil y rápido; solo tuve que ordenarla. El bajo fue el origen
 Tuve la fortuna de encargar un verso a R.A.P. Ferreira, quien ha sido uno de mis artistas favoritos desde finales de los 2010. El verso habla por sí solo, y no puedo creer que tenga uno de ellos en una de mis canciones. Espero encargar muchos más en el futuro.
 
 [^1]: ¿O era igual de seguido y la percepción nomás estaba más comprimida?
+
 [^2]: ¿Las siente? Espero no estar emitiendo mentiras científicas al universo.

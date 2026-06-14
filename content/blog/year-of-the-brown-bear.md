@@ -3,6 +3,7 @@ title: "Oh! New Keyboard"
 date: "2026-03-10"
 author: "Nikolas Murdock"
 hidden: true
+language: English
 ---
 
 I might not get used to the fact that the B key is on the other side, but we’ll do our best.
