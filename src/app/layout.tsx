@@ -19,7 +19,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={cormorant.variable}>
+    <html lang="en" className={cormorant.variable} suppressHydrationWarning>
       <body>{children}</body>
     </html>
   );
