@@ -1,6 +1,7 @@
 import { getLocale } from "../../../lib/locale";
 import { t } from "../../../lib/translations";
 import "../../../styles/contact.css";
+import CopyEmail from "../../../components/CopyEmail";
 
 export default async function ContactPage() {
   const locale = await getLocale();
@@ -20,7 +21,7 @@ export default async function ContactPage() {
             </div>
             <div className="contact-list__row">
               <dt>Email</dt>
-              <dd><a href="mailto:bear@bisonrecords.co">bear@bisonrecords.co</a></dd>
+              <dd><CopyEmail locale={locale} email="bear@bisonrecords.co" /></dd>
             </div>
           </dl>
         </section>
@@ -30,7 +31,7 @@ export default async function ContactPage() {
           <dl className="contact-list">
             <div className="contact-list__row">
               <dt>Email</dt>
-              <dd><a href="mailto:contacto.pmmusic@gmail.com">contacto.pmmusic@gmail.com</a></dd>
+              <dd><CopyEmail locale={locale} email="contacto.pmmusic@gmail.com" /></dd>
             </div>
           </dl>
         </section>

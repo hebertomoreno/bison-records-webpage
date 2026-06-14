@@ -318,6 +318,31 @@ a.adm-list-item__title:hover {
   margin-top: 0.5rem;
 }
 
+.adm-dropzone--busy {
+  cursor: default;
+  pointer-events: none;
+  border-color: #a1a1aa;
+}
+
+.adm-dropzone__label--error {
+  color: #ef4444;
+}
+
+.adm-dropzone__progress-bar {
+  height: 4px;
+  background: #e4e4e7;
+  border-radius: 2px;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+
+.adm-dropzone__progress-fill {
+  height: 100%;
+  background: #18181b;
+  border-radius: 2px;
+  transition: width 0.1s ease;
+}
+
 .adm-upload-result {
   margin-top: 1rem;
   background: #f0fdf4;

@@ -140,7 +140,7 @@ export const translations = {
     contact: {
       heading: "Contacto",
       bookings: "Bookings y General",
-      press: "Editorial",
+      press: "Prensa",
       phone: "Teléfono",
     },
     hero: {

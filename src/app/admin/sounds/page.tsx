@@ -2,40 +2,116 @@
 
 import { useEffect, useState, useRef } from "react";
 
+type UploadState =
+  | { phase: "idle" }
+  | { phase: "uploading"; progress: number }
+  | { phase: "done"; path: string }
+  | { phase: "error"; message: string };
+
+function extractDuration(file: File): Promise<string> {
+  return new Promise((resolve) => {
+    const url = URL.createObjectURL(file);
+    const audio = new Audio(url);
+    audio.onloadedmetadata = () => {
+      URL.revokeObjectURL(url);
+      const total = Math.round(audio.duration);
+      const m = Math.floor(total / 60);
+      const s = total % 60;
+      resolve(`${m}:${s.toString().padStart(2, "0")}`);
+    };
+    audio.onerror = () => { URL.revokeObjectURL(url); resolve(""); };
+  });
+}
+
+function slugify(title: string): string {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function uniqueSlug(base: string, existingIds: string[]): string {
+  if (!existingIds.includes(base)) return base;
+  let n = 2;
+  while (existingIds.includes(`${base}-${n}`)) n++;
+  return `${base}-${n}`;
+}
+
 function FileDropzone({ dest, accept, hint, onUploaded }: {
   dest: string;
   accept: string;
   hint: string;
-  onUploaded: (path: string) => void;
+  onUploaded: (path: string, duration: string) => void;
 }) {
   const [dragging, setDragging] = useState(false);
-  const [status, setStatus] = useState<string | null>(null);
+  const [state, setState] = useState<UploadState>({ phase: "idle" });
   const inputRef = useRef<HTMLInputElement>(null);
 
   async function upload(file: File) {
-    setStatus("Uploading…");
-    const fd = new FormData();
-    fd.append("file", file);
-    fd.append("dest", dest);
-    const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
-    const data = await res.json();
-    setStatus(`Saved: ${data.path}`);
-    onUploaded(data.path);
+    setState({ phase: "uploading", progress: 0 });
+
+    const CHUNK = 4 * 1024 * 1024; // 4 MB — stays under the 10 MB body limit
+    const totalChunks = Math.ceil(file.size / CHUNK);
+    const uploadId = crypto.randomUUID();
+    const durationPromise = extractDuration(file);
+
+    for (let i = 0; i < totalChunks; i++) {
+      const fd = new FormData();
+      fd.append("chunk", file.slice(i * CHUNK, (i + 1) * CHUNK), file.name);
+      fd.append("uploadId", uploadId);
+      fd.append("chunkIndex", String(i));
+      fd.append("totalChunks", String(totalChunks));
+      fd.append("filename", file.name);
+      fd.append("dest", dest);
+
+      let res: Response;
+      try {
+        res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+      } catch {
+        setState({ phase: "error", message: "Network error — upload did not complete." });
+        return;
+      }
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setState({ phase: "error", message: data.error ?? `Upload failed (${res.status})` });
+        return;
+      }
+
+      setState({ phase: "uploading", progress: Math.round(((i + 1) / totalChunks) * 100) });
+    }
+
+    const duration = await durationPromise;
+    const finalPath = `/media/${dest}/${file.name}`;
+    setState({ phase: "done", path: finalPath });
+    onUploaded(finalPath, duration);
   }
+
+  const uploading = state.phase === "uploading";
 
   return (
     <div
-      className={`adm-dropzone${dragging ? " adm-dropzone--drag" : ""}`}
+      className={`adm-dropzone${dragging ? " adm-dropzone--drag" : ""}${uploading ? " adm-dropzone--busy" : ""}`}
       style={{ marginTop: 4 }}
-      onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+      onDragOver={(e) => { if (!uploading) { e.preventDefault(); setDragging(true); } }}
       onDragLeave={() => setDragging(false)}
-      onDrop={(e) => { e.preventDefault(); setDragging(false); if (e.dataTransfer.files[0]) upload(e.dataTransfer.files[0]); }}
-      onClick={() => inputRef.current?.click()}
+      onDrop={(e) => { e.preventDefault(); setDragging(false); if (!uploading && e.dataTransfer.files[0]) upload(e.dataTransfer.files[0]); }}
+      onClick={() => { if (!uploading) inputRef.current?.click(); }}
     >
-      <div className="adm-dropzone__label">{status ?? "Drop file here or click to browse"}</div>
-      <div className="adm-dropzone__hint">{hint}</div>
+      {state.phase === "uploading" && (
+        <div className="adm-dropzone__progress-bar">
+          <div className="adm-dropzone__progress-fill" style={{ width: `${state.progress}%` }} />
+        </div>
+      )}
+      <div className={`adm-dropzone__label${state.phase === "error" ? " adm-dropzone__label--error" : ""}`}>
+        {state.phase === "idle" && "Drop file here or click to browse"}
+        {state.phase === "uploading" && `Uploading… ${state.progress}%`}
+        {state.phase === "done" && `✓ Saved: ${state.path}`}
+        {state.phase === "error" && `✗ ${state.message}`}
+      </div>
+      {state.phase === "error" && (
+        <div className="adm-dropzone__hint" style={{ color: "#ef4444" }}>Click to try again</div>
+      )}
+      {state.phase === "idle" && <div className="adm-dropzone__hint">{hint}</div>}
       <input ref={inputRef} type="file" accept={accept} style={{ display: "none" }}
-        onChange={(e) => { if (e.target.files?.[0]) upload(e.target.files[0]); }} />
+        onChange={(e) => { if (e.target.files?.[0]) { upload(e.target.files[0]); e.target.value = ""; } }} />
     </div>
   );
 }
@@ -101,9 +177,13 @@ export default function AdminSounds() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
+    // Update local state directly — the API returns stale data until the dev
+    // server hot-reloads the updated tracks.ts module.
+    setTracks((prev) =>
+      isNew ? [...prev, payload] : prev.map((t) => (t.id === payload.id ? payload : t))
+    );
     setEditing(null);
     setIsNew(false);
-    load();
   }
 
   async function toggleHidden(t: Track) {
@@ -129,6 +209,16 @@ export default function AdminSounds() {
     setEditing((t) => t ? { ...t, [field]: value } : t);
   }
 
+  function handleTitleChange(value: string) {
+    setEditing((t) => {
+      if (!t) return t;
+      const base = slugify(value);
+      const existingIds = tracks.map((tr) => tr.id).filter((id) => id !== t.id);
+      const id = isNew ? uniqueSlug(base, existingIds) : t.id;
+      return { ...t, title: value, id };
+    });
+  }
+
   return (
     <div>
       <div className="adm-page-header">
@@ -141,12 +231,12 @@ export default function AdminSounds() {
       {editing ? (
         <div className="adm-form" style={{ maxWidth: 640 }}>
           <div className="adm-field">
-            <label>ID</label>
-            <input value={editing.id} onChange={(e) => set("id", e.target.value)} placeholder="unique-slug" disabled={!isNew} />
+            <label>Title</label>
+            <input value={editing.title} onChange={(e) => handleTitleChange(e.target.value)} />
           </div>
           <div className="adm-field">
-            <label>Title</label>
-            <input value={editing.title} onChange={(e) => set("title", e.target.value)} />
+            <label>ID (slug)</label>
+            <input value={editing.id} onChange={(e) => set("id", e.target.value)} placeholder="unique-slug" disabled={!isNew} />
           </div>
           <div className="adm-field">
             <label>Artist</label>
@@ -158,13 +248,9 @@ export default function AdminSounds() {
             <FileDropzone
               dest="audio"
               accept="audio/*"
-              hint="MP3, WAV, FLAC, AAC, OGG"
-              onUploaded={(path) => set("file", path)}
+              hint="MP3, WAV, FLAC, AAC, OGG — duration will be read automatically"
+              onUploaded={(path, duration) => setEditing((t) => t ? { ...t, file: path, duration: duration || t.duration } : t)}
             />
-          </div>
-          <div className="adm-field">
-            <label>Duration (e.g. 1:23)</label>
-            <input value={editing.duration ?? ""} onChange={(e) => set("duration", e.target.value)} placeholder="0:31" />
           </div>
           <div className="adm-field">
             <label>Recorded at</label>
