@@ -18,6 +18,7 @@ export default function Navbar({ items, locale = "en" }: { items: NavItem[]; loc
   const [navHidden, setNavHidden] = useState(false);
 
   useLayoutEffect(() => {
+    setOpen(false);
     const scrollEl = document.querySelector<HTMLElement>(".site-layout > main");
     if (scrollEl) scrollEl.scrollTop = 0;
 
