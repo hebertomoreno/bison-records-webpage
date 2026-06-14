@@ -107,7 +107,7 @@ export const translations = {
       sounds: "Sonidos",
       blog: "Blog",
       events: "Eventos",
-      press: "Prensa",
+      press: "Editorial",
       contact: "Contacto",
     },
     artists: {
@@ -134,13 +134,13 @@ export const translations = {
       readPost: "Leer la entrada",
     },
     press: {
-      heading: "Prensa",
-      empty: "Materiales de prensa próximamente.",
+      heading: "Editorial",
+      empty: "Publicaciones del equipo de Bison Records",
     },
     contact: {
       heading: "Contacto",
       bookings: "Bookings y General",
-      press: "Prensa",
+      press: "Editorial",
       phone: "Teléfono",
     },
     hero: {

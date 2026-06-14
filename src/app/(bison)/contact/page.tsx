@@ -20,7 +20,7 @@ export default async function ContactPage() {
             </div>
             <div className="contact-list__row">
               <dt>Email</dt>
-              <dd><a href="mailto:nikolasmurdock@gmail.com">nikolasmurdock@gmail.com</a></dd>
+              <dd><a href="mailto:bear@bisonrecords.co">bear@bisonrecords.co</a></dd>
             </div>
           </dl>
         </section>
