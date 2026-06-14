@@ -11,17 +11,9 @@ export interface Release {
 
 export const upcomingReleases: Release[] = [
   {
-    artist: "Nikolas Murdock feat. R.A.P Ferreira",
-    title: "Earth 2",
-    date: "May 5, 2026",
-    image: "/media/images/Earth2CoverDenisse.jpeg",
-    href: "/blog/earth-2",
-    release_type: "Single",
-  },
-  {
     artist: "Nikolas Murdock",
     title: "Uhhh... Sure... Ok?",
-    date: "June 1, 2026",
+    date: "July 2026",
     image: "/media/images/UhSureOkCover.jpg",
     href: "/blog/uhhh-sure-ok",
     release_type: "EP",
@@ -37,5 +29,20 @@ export const upcomingReleases: Release[] = [
 ];
 
 export const recentReleases: Release[] = [
-  // Add recent releases here
+  {
+    artist: "Nikolas Murdock feat. R.A.P Ferreira",
+    title: "Earth 2",
+    date: "May 29, 2026",
+    image: "/media/images/Earth2CoverDenisse.jpeg",
+    href: "https://open.spotify.com/album/6bR1vJNRu2sLnZaGM1Cg3d",
+    release_type: "Single",
+  },
+  {
+    artist: "Nube Render feat. OZOZOZ",
+    title: "Río Lerma",
+    date: "August 1, 2024",
+    image: "https://i.scdn.co/image/ab67616d0000b27377ad47ab7f337287528a7295",
+    href: "https://open.spotify.com/album/6JqcOP54cLzUsq6sJ6FIZs",
+    release_type: "Single",
+  },
 ];

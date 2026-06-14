@@ -18,19 +18,28 @@ export default function Navbar({ items, locale = "en" }: { items: NavItem[]; loc
   const [navHidden, setNavHidden] = useState(false);
 
   useLayoutEffect(() => {
-    const hero = document.querySelector<HTMLElement>(".hero-wrapper");
+    setOpen(false);
     const scrollEl = document.querySelector<HTMLElement>(".site-layout > main");
+    if (scrollEl) scrollEl.scrollTop = 0;
 
-    if (!hero || !scrollEl) {
-      setNavHidden(false);
-      return;
-    }
+    let removeListener: (() => void) | null = null;
 
-    const update = () => setNavHidden(scrollEl.scrollTop < hero.offsetHeight);
+    const rafId = requestAnimationFrame(() => {
+      const hero = document.querySelector<HTMLElement>(".hero-wrapper");
+      if (!hero || !scrollEl) {
+        setNavHidden(false);
+        return;
+      }
+      const update = () => setNavHidden(scrollEl.scrollTop < hero.offsetHeight);
+      update();
+      scrollEl.addEventListener("scroll", update, { passive: true });
+      removeListener = () => scrollEl.removeEventListener("scroll", update);
+    });
 
-    update();
-    scrollEl.addEventListener("scroll", update, { passive: true });
-    return () => scrollEl.removeEventListener("scroll", update);
+    return () => {
+      cancelAnimationFrame(rafId);
+      removeListener?.();
+    };
   }, [pathname]);
 
   return (

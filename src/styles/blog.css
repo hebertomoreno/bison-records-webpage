@@ -84,7 +84,7 @@
 /* ── Single post ── */
 .blog-post {
   padding: 8rem 2rem 6rem;
-  max-width: 680px;
+  max-width: 880px;
   margin: 0 auto;
 }
 
@@ -132,7 +132,7 @@
 /* Rendered markdown body */
 .blog-post__body {
   font-family: var(--font-cormorant);
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 400;
   line-height: 1.75;
   color: color-mix(in srgb, var(--foreground) 85%, transparent);
@@ -202,11 +202,11 @@
 
 /* inline superscript reference */
 .blog-post__body sup a {
-  font-size: 14px;
+  font-size: 18px;
   font-style: normal;
   letter-spacing: 0;
   border-bottom: none;
-  color: #7a9e7e;
+  color: #28d03b;
 }
 
 .blog-post__body strong {

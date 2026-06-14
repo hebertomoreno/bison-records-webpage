@@ -6,7 +6,7 @@ export const translations = {
       sounds: "Sounds",
       blog: "Blog",
       events: "Events",
-      press: "Press",
+      press: "Bison Press",
       contact: "Contact",
     },
     artists: {
@@ -31,6 +31,16 @@ export const translations = {
       heading: "Events",
       empty: "No upcoming events.",
       readPost: "Read the post",
+    },
+    press: {
+      heading: "Bison Press",
+      empty: "Publications by the Bison Records crew.",
+    },
+    contact: {
+      heading: "Contact",
+      bookings: "Bookings & General",
+      press: "Press",
+      phone: "Phone",
     },
     hero: {
       tagline: "Since 2014",
@@ -122,6 +132,16 @@ export const translations = {
       heading: "Eventos",
       empty: "Sin eventos próximos.",
       readPost: "Leer la entrada",
+    },
+    press: {
+      heading: "Prensa",
+      empty: "Materiales de prensa próximamente.",
+    },
+    contact: {
+      heading: "Contacto",
+      bookings: "Bookings y General",
+      press: "Prensa",
+      phone: "Teléfono",
     },
     hero: {
       tagline: "Desde 2014",
