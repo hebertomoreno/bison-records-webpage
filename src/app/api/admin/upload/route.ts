@@ -1,23 +1,48 @@
 import { NextRequest } from "next/server";
 import fs from "fs";
 import path from "path";
+import os from "os";
+
+const TMP = path.join(os.tmpdir(), "bison-uploads");
 
 export async function POST(req: NextRequest) {
   if (process.env.NODE_ENV !== "development") {
     return Response.json({ error: "Not available" }, { status: 403 });
   }
+
   const form = await req.formData();
-  const file = form.get("file") as File | null;
-  const dest = (form.get("dest") as string) ?? "images"; // "images" | "audio" | "video"
+  const chunk = form.get("chunk") as File | null;
+  const uploadId = form.get("uploadId") as string;
+  const chunkIndex = parseInt(form.get("chunkIndex") as string, 10);
+  const totalChunks = parseInt(form.get("totalChunks") as string, 10);
+  const filename = form.get("filename") as string;
+  const dest = (form.get("dest") as string) ?? "images";
 
-  if (!file) return Response.json({ error: "No file" }, { status: 400 });
+  if (!chunk || !uploadId || !filename) {
+    return Response.json({ error: "Missing fields" }, { status: 400 });
+  }
 
-  const dir = path.join(process.cwd(), "public/media", dest);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  // Write this chunk to a temp file
+  const tmpDir = path.join(TMP, uploadId);
+  fs.mkdirSync(tmpDir, { recursive: true });
+  fs.writeFileSync(path.join(tmpDir, `chunk-${chunkIndex}`), Buffer.from(await chunk.arrayBuffer()));
 
-  const bytes = await file.arrayBuffer();
-  const outPath = path.join(dir, file.name);
-  fs.writeFileSync(outPath, Buffer.from(bytes));
+  // If all chunks have arrived, assemble the final file
+  if (chunkIndex === totalChunks - 1) {
+    const destDir = path.join(process.cwd(), "public/media", dest);
+    fs.mkdirSync(destDir, { recursive: true });
+    const outPath = path.join(destDir, filename);
 
-  return Response.json({ path: `/media/${dest}/${file.name}` });
+    const out = fs.createWriteStream(outPath);
+    for (let i = 0; i < totalChunks; i++) {
+      out.write(fs.readFileSync(path.join(tmpDir, `chunk-${i}`)));
+    }
+    out.end();
+    await new Promise<void>((resolve, reject) => { out.on("finish", resolve); out.on("error", reject); });
+
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+    return Response.json({ done: true, path: `/media/${dest}/${filename}` });
+  }
+
+  return Response.json({ done: false });
 }

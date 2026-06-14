@@ -236,8 +236,8 @@ export default async function NikolasMurdockPage() {
           <h2 className="nm-section__title">{tr.sections.contact}</h2>
           <div className="nm-contact-inner">
             <p className="nm-contact__text">{tr.contact.text}</p>
-            <a href="mailto:nikolasmurdock@gmail.com" className="nm-contact__email">
-              nikolasmurdock@gmail.com
+            <a href="mailto:bear@bisonrecords.co" className="nm-contact__email">
+              bear@bisonrecords.co
             </a>
           </div>
         </div>

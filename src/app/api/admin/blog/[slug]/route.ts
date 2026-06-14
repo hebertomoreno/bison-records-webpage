@@ -26,14 +26,14 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ slu
     }
     body = match[2].trim();
   }
-  return Response.json({ slug, title: fm.title ?? "", date: fm.date ?? "", author: fm.author ?? "", excerpt: fm.excerpt ?? "", hidden: fm.hidden === "true", body });
+  return Response.json({ slug, title: fm.title ?? "", date: fm.date ?? "", author: fm.author ?? "", excerpt: fm.excerpt ?? "", hidden: fm.hidden === "true", language: fm.language ?? "en", body });
 }
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   devOnly();
   const { slug } = await params;
-  const { title, date, author, excerpt, body, hidden } = await req.json();
-  const fm = [`---`, `title: ${title}`, `date: ${date}`, author ? `author: ${author}` : null, excerpt ? `excerpt: ${excerpt}` : null, hidden ? `hidden: true` : null, `---`].filter(Boolean).join("\n");
+  const { title, date, author, excerpt, body, hidden, language } = await req.json();
+  const fm = [`---`, `title: ${title}`, `date: ${date}`, author ? `author: ${author}` : null, excerpt ? `excerpt: ${excerpt}` : null, hidden ? `hidden: true` : null, language && language !== "en" ? `language: ${language}` : null, `---`].filter(Boolean).join("\n");
   fs.writeFileSync(path.join(BLOG_DIR, `${slug}.md`), `${fm}\n\n${body ?? ""}`);
   return Response.json({ ok: true });
 }
@@ -55,7 +55,7 @@ export async function PATCH(_req: NextRequest, { params }: { params: Promise<{ s
     body = match[2].trim();
   }
   const nowHidden = fm.hidden === "true";
-  const newFm = [`---`, `title: ${fm.title ?? ""}`, `date: ${fm.date ?? ""}`, fm.author ? `author: ${fm.author}` : null, fm.excerpt ? `excerpt: ${fm.excerpt}` : null, !nowHidden ? `hidden: true` : null, `---`].filter(Boolean).join("\n");
+  const newFm = [`---`, `title: ${fm.title ?? ""}`, `date: ${fm.date ?? ""}`, fm.author ? `author: ${fm.author}` : null, fm.excerpt ? `excerpt: ${fm.excerpt}` : null, !nowHidden ? `hidden: true` : null, fm.language && fm.language !== "en" ? `language: ${fm.language}` : null, `---`].filter(Boolean).join("\n");
   fs.writeFileSync(file, `${newFm}\n\n${body}`);
   return Response.json({ hidden: !nowHidden });
 }

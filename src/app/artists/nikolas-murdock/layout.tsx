@@ -40,7 +40,7 @@ export default async function NikolasLayout({
               <a href="#videos">Videos</a>
               <a href="#contact">Contact</a>
             </nav>
-            <a href="mailto:nikolasmurdock@gmail.com" className="nm-footer__email">nikolasmurdock@gmail.com</a>
+            <a href="mailto:bear@bisonrecords.co" className="nm-footer__email">bear@bisonrecords.co</a>
           </div>
           <p className="nm-footer__rights">© {new Date().getFullYear()} Nikolas Murdock. All rights reserved.</p>
         </footer>

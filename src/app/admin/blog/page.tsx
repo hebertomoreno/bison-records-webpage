@@ -4,7 +4,14 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-interface Post { slug: string; title: string; date: string; author: string; hidden: boolean }
+interface Post {
+  slug: string;
+  title: string;
+  date: string;
+  author: string;
+  hidden: boolean;
+  language: string;
+}
 
 export default function AdminBlogList() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -12,10 +19,14 @@ export default function AdminBlogList() {
 
   async function load() {
     const res = await fetch("/api/admin/blog");
-    setPosts(await res.json());
+    const data = await res.json();
+    console.log("Blog posts:", data);
+    setPosts(data);
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   async function toggleHidden(slug: string) {
     await fetch(`/api/admin/blog/${slug}`, { method: "PATCH" });
@@ -44,15 +55,28 @@ export default function AdminBlogList() {
           {posts.map((p) => (
             <div key={p.slug} className="adm-list-item">
               <div>
-                <Link href={`/admin/blog/${p.slug}`} className="adm-list-item__title">{p.title}</Link>
-                <div className="adm-list-item__meta">{p.date}{p.author ? ` · ${p.author}` : ""}</div>
+                <Link href={`/admin/blog/${p.slug}`} className="adm-list-item__title">
+                  {p.title}
+                </Link>
+                <div className="adm-list-item__meta">
+                  {p.date}
+                  {p.author ? ` · ${p.author}` : ""}
+                  {p.language ? ` · ${p.language}` : ""}
+                </div>
               </div>
               <div className="adm-list-item__actions">
-                <button className={`adm-btn ${p.hidden ? "adm-btn--danger" : "adm-btn--ghost"}`} onClick={() => toggleHidden(p.slug)}>
+                <button
+                  className={`adm-btn ${p.hidden ? "adm-btn--danger" : "adm-btn--ghost"}`}
+                  onClick={() => toggleHidden(p.slug)}
+                >
                   {p.hidden ? "Hidden" : "Visible"}
                 </button>
-                <Link href={`/admin/blog/${p.slug}`} className="adm-btn adm-btn--ghost">Edit</Link>
-                <button className="adm-btn adm-btn--danger" onClick={() => deletePost(p.slug)}>Delete</button>
+                <Link href={`/admin/blog/${p.slug}`} className="adm-btn adm-btn--ghost">
+                  Edit
+                </Link>
+                <button className="adm-btn adm-btn--danger" onClick={() => deletePost(p.slug)}>
+                  Delete
+                </button>
               </div>
             </div>
           ))}

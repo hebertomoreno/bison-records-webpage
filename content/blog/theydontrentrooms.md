@@ -4,6 +4,7 @@ date: "2026-01-15"
 author: "Nikolas Murdock"
 excerpt: "At least, I guess they don’t rent them advertising it. "
 hidden: true
+language: English
 ---
 
 There’s rooms you can rent to fuck in, but it’s not enforced. You can do much more than fuck in those rooms. Maybe cry.

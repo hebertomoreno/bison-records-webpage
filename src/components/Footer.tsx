@@ -46,8 +46,8 @@ export default async function Footer() {
 
         <div className="site-footer__contact">
           <p className="site-footer__contact-label">{tr.getInTouch}</p>
-          <a href="mailto:info@bisonrecords.com" className="site-footer__email">
-            info@bisonrecords.com
+          <a href="mailto:bear@bisonrecords.co" className="site-footer__email">
+            bear@bisonrecords.co
           </a>
         </div>
       </div>

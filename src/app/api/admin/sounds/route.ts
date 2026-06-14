@@ -5,11 +5,6 @@ import { tracks } from "../../../../data/tracks";
 
 const FILE = path.join(process.cwd(), "src/data/tracks.ts");
 
-function guard() {
-  if (process.env.NODE_ENV !== "development")
-    return Response.json({ error: "Not available" }, { status: 403 });
-}
-
 function serialize(list: typeof tracks) {
   const lines = [
     `export interface Track {`,
@@ -20,6 +15,7 @@ function serialize(list: typeof tracks) {
     `  description: string;`,
     `  duration: string | null;`,
     `  recordedAt: string | null;`,
+    `  hidden?: boolean;`,
     `}`,
     ``,
     `// ── Edit tracks here (or run \`npm run scan-audio\` to regenerate) ────`,
@@ -43,12 +39,14 @@ function serialize(list: typeof tracks) {
 }
 
 export async function GET() {
-  guard();
+  if (process.env.NODE_ENV !== "development")
+    return Response.json({ error: "Not available" }, { status: 403 });
   return Response.json(tracks);
 }
 
 export async function POST(req: NextRequest) {
-  guard();
+  if (process.env.NODE_ENV !== "development")
+    return Response.json({ error: "Not available" }, { status: 403 });
   const item = await req.json();
   const list = [...tracks, item];
   fs.writeFileSync(FILE, serialize(list));
@@ -56,7 +54,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  guard();
+  if (process.env.NODE_ENV !== "development")
+    return Response.json({ error: "Not available" }, { status: 403 });
   const item = await req.json();
   const list = tracks.map((t) => (t.id === item.id ? item : t));
   fs.writeFileSync(FILE, serialize(list));
@@ -64,7 +63,8 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  guard();
+  if (process.env.NODE_ENV !== "development")
+    return Response.json({ error: "Not available" }, { status: 403 });
   const { id } = await req.json();
   const list = tracks.filter((t) => t.id !== id);
   fs.writeFileSync(FILE, serialize(list));

@@ -25,17 +25,38 @@ export async function GET() {
         if (k) fm[k.trim()] = v.join(":").trim();
       }
     }
-    return { slug, title: fm.title ?? slug, date: fm.date ?? "", author: fm.author ?? "", hidden: fm.hidden === "true" };
+    return {
+      slug,
+      title: fm.title ?? slug,
+      date: fm.date ?? "",
+      author: fm.author ?? "",
+      hidden: fm.hidden === "true",
+      language: fm.language ?? "",
+    };
   });
   return Response.json(posts.sort((a, b) => (a.date < b.date ? 1 : -1)));
 }
 
 export async function POST(req: NextRequest) {
   devOnly();
-  const { title, date, author, excerpt, body, hidden } = await req.json();
-  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  const { title, date, author, excerpt, body, hidden, language } = await req.json();
+  const slug = title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
   if (!fs.existsSync(BLOG_DIR)) fs.mkdirSync(BLOG_DIR, { recursive: true });
-  const fm = [`---`, `title: ${title}`, `date: ${date}`, author ? `author: ${author}` : null, excerpt ? `excerpt: ${excerpt}` : null, hidden ? `hidden: true` : null, `---`].filter(Boolean).join("\n");
+  const fm = [
+    `---`,
+    `title: ${title}`,
+    `date: ${date}`,
+    author ? `author: ${author}` : null,
+    excerpt ? `excerpt: ${excerpt}` : null,
+    hidden ? `hidden: true` : null,
+    language ? `language: ${language}` : null,
+    `---`,
+  ]
+    .filter(Boolean)
+    .join("\n");
   fs.writeFileSync(path.join(BLOG_DIR, `${slug}.md`), `${fm}\n\n${body ?? ""}`);
   return Response.json({ slug });
 }

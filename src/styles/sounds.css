@@ -63,12 +63,19 @@
   flex-shrink: 0;
   padding-left: 2px; /* optical centering for play triangle */
   color: var(--foreground);
+  -webkit-appearance: none;
+  appearance: none;
 }
 
+.sound-play:focus {
+  outline: none;
+}
+
+.sound-play:active,
 .sound-play:hover,
 .sound-row--active .sound-play {
   background: var(--foreground);
-  color: #fff;
+  color: var(--background);
 }
 
 /* Track info */
