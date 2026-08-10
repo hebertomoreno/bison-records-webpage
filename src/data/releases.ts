@@ -13,7 +13,7 @@ export const upcomingReleases: Release[] = [
   {
     artist: "Nikolas Murdock",
     title: "Uhhh... Sure... Ok?",
-    date: "July 2026",
+    date: "September 2026",
     image: "/media/images/UhSureOkCover.jpg",
     href: "/blog/uhhh-sure-ok",
     release_type: "EP",
