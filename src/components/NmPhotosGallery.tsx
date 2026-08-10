@@ -42,6 +42,7 @@ export default function NmPhotosGallery() {
               src={`/media/images/NikMdkOfficialPhotos/${filename}`}
               alt="Nikolas Murdock"
               className="nm-photo"
+              loading="lazy"
             />
           </button>
         ))}

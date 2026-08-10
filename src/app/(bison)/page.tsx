@@ -24,7 +24,7 @@ function ReleaseGrid({
         <div className="upcoming__grid">
           {releases.map((release) => (
             <div key={`${release.artist}-${release.title}`} className="upcoming__release">
-              <a href={release.href}><img src={release.image} alt={release.title} className="upcoming__cover" /></a>
+              <a href={release.href}><img src={release.image} alt={release.title} className="upcoming__cover" loading="lazy" /></a>
               <p className="upcoming__title">{release.title}</p>
               <p className="upcoming__artist">{release.artist}</p>
               <p className="upcoming__release-type">{release.release_type}</p>
