@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Image from "next/image";
 import "../styles/hero.css";
@@ -17,6 +17,36 @@ export interface Slide {
 }
 
 const INTERVAL = 15000;
+
+function VideoSlide({ src, active }: { src: string; active: boolean }) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (active) {
+      v.play().catch(() => {});
+    } else {
+      v.pause();
+      v.currentTime = 0;
+    }
+  }, [active]);
+
+  return (
+    <video
+      ref={ref}
+      className="hero-slide__video"
+      muted
+      loop
+      playsInline
+      // Only eagerly load the first slide; everything else defers until active
+      preload={active ? "auto" : "none"}
+    >
+      <source src={`${src}.webm`} type="video/webm" />
+      <source src={`${src}-opt.mp4`} type="video/mp4" />
+    </video>
+  );
+}
 
 export default function Hero({ slides }: { slides: Slide[] }) {
   const [current, setCurrent] = useState(0);
@@ -48,13 +78,7 @@ export default function Hero({ slides }: { slides: Slide[] }) {
           className={`hero-slide ${i === current ? "hero-slide--active" : ""}`}
           style={slide.image ? { backgroundImage: `url(${slide.image})` } : undefined}
         >
-          {slide.video && (
-            <video className="hero-slide__video" autoPlay muted loop playsInline>
-              <source src={`${slide.video}.webm`} type="video/webm" />
-              <source src={`${slide.video}-opt.mp4`} type="video/mp4" />
-              <source src={`${slide.video}.mp4`} type="video/mp4" />
-            </video>
-          )}
+          {slide.video && <VideoSlide src={slide.video} active={i === current} />}
           <div className="hero-slide__overlay" />
           <div className="hero-content">
             {slide.artist && <p className="hero-artist">{slide.artist}</p>}
@@ -84,7 +108,6 @@ export default function Hero({ slides }: { slides: Slide[] }) {
         </div>
       ))}
 
-      {/* Arrows */}
       <button className="hero-arrow hero-arrow--prev" onClick={prev} aria-label="Previous slide">
         <FiChevronLeft size={80} />
       </button>
@@ -92,7 +115,6 @@ export default function Hero({ slides }: { slides: Slide[] }) {
         <FiChevronRight size={80} />
       </button>
 
-      {/* Dot navigation */}
       <div className="hero-dots">
         {slides.map((_, i) => (
           <button
