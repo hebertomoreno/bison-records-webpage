@@ -43,35 +43,37 @@ function ReleaseGrid({
 export default async function HomePage() {
   const [locale, upcomingReleases, recentReleases] = await Promise.all([
     getLocale(),
-    Promise.resolve(getUpcomingReleases()),
-    Promise.resolve(getRecentReleases()),
+    getUpcomingReleases(),
+    getRecentReleases(),
   ]);
   const { hero: heroTr, releases: releasesTr, nav: navTr } = t(locale);
 
   const leftNav = [
-    { href: "/artists", label: navTr.artists, video: "/media/video/Landscapes/landscape1-opt.mp4" },
-    { href: "/videos", label: navTr.videos, video: "/media/video/Landscapes/landscape2-opt.mp4" },
-    { href: "/sounds", label: navTr.sounds, video: "/media/video/Landscapes/landscape3-opt.mp4" },
+    { href: "/artists", label: navTr.artists, video: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/video/Landscapes/landscape1-opt.mp4" },
+    { href: "/videos", label: navTr.videos, video: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/video/Landscapes/landscape2-opt.mp4" },
+    { href: "/sounds", label: navTr.sounds, video: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/video/Landscapes/landscape3-opt.mp4" },
   ];
 
   const rightNav = [
-    { href: "/blog", label: navTr.blog, video: "/media/video/Landscapes/landscape4-opt.mp4" },
-    { href: "/events", label: navTr.events, video: "/media/video/Landscapes/landscape5-opt.mp4" },
-    { href: "/press", label: navTr.press, video: "/media/video/Landscapes/landscape6-opt.mp4" },
+    { href: "/blog", label: navTr.blog, video: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/video/Landscapes/landscape4-opt.mp4" },
+    { href: "/events", label: navTr.events, video: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/video/Landscapes/landscape5-opt.mp4" },
+    { href: "/press", label: navTr.press, video: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/video/Landscapes/landscape6-opt.mp4" },
   ];
 
   const slides = [
     {
-      video: "/media/video/HeroBison1",
-      logo: "/media/images/RecordsLogo.png",
+      videoWebm: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/video/HeroBison1.webm",
+      videoMp4: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/video/HeroBison1-opt.mp4",
+      logo: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/images/RecordsLogo.png",
       title: "Bison Records",
       subtitle: "Ars sola est digna occupatio",
       tagline: heroTr.tagline,
       buttons: [{ label: heroTr.ourArtists, href: "/artists" }],
     },
     {
-      video: "/media/video/HeroBear1",
-      logo: "/media/images/NikMDkLogo.png",
+      videoWebm: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/video/HeroBear1.webm",
+      videoMp4: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/video/HeroBear1-opt.mp4",
+      logo: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/images/NikMDkLogo.png",
       title: "Year Of The Brown Bear",
       subtitle: heroTr.nikolasSubtitle,
       buttons: [{ label: heroTr.nikolasButton, href: "/artists/nikolas-murdock" }],

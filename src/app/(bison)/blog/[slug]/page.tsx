@@ -5,7 +5,8 @@ import { getLocale } from "../../../../lib/locale";
 import { t } from "../../../../lib/translations";
 
 export async function generateStaticParams() {
-  return getAllPosts().map((post) => ({ slug: post.slug }));
+  const posts = await getAllPosts();
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {

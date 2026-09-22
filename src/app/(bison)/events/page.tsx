@@ -1,13 +1,12 @@
 import Link from "next/link";
-import { events } from "../../../data/events";
+import { getVisibleEvents } from "../../../lib/events";
 import { getLocale } from "../../../lib/locale";
 import { t } from "../../../lib/translations";
 import "../../../styles/events.css";
 
 export default async function EventsPage() {
-  const locale = await getLocale();
+  const [locale, visible] = await Promise.all([getLocale(), getVisibleEvents()]);
   const tr = t(locale).events;
-  const visible = events.filter((e) => !e.hidden);
 
   return (
     <div className="events-page">

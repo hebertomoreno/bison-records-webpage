@@ -1,72 +1,86 @@
 import { NextRequest } from "next/server";
-import fs from "fs";
-import path from "path";
-import { events } from "../../../../data/events";
-
-const FILE = path.join(process.cwd(), "src/data/events.ts");
+import { asc, eq } from "drizzle-orm";
+import { db } from "../../../../db";
+import { events } from "../../../../db/schema";
 
 function guard() {
   if (process.env.NODE_ENV !== "development")
     return Response.json({ error: "Not available" }, { status: 403 });
 }
 
-function serialize(list: typeof events) {
-  const lines = [
-    `export interface Event {`,
-    `  id: string;`,
-    `  title: string;`,
-    `  description: string;`,
-    `  image: string;`,
-    `  images: string[];`,
-    `  dates: string[];`,
-    `  blogSlug?: string;`,
-    `}`,
-    ``,
-    `// ── Add events here ─────────────────────────────────────────────`,
-    ``,
-    `export const events: Event[] = [`,
-  ];
-  for (const e of list) {
-    lines.push(`  {`);
-    lines.push(`    id: ${JSON.stringify(e.id)},`);
-    lines.push(`    title: ${JSON.stringify(e.title)},`);
-    lines.push(`    description: ${JSON.stringify(e.description)},`);
-    lines.push(`    image: ${JSON.stringify(e.image)},`);
-    lines.push(`    images: ${JSON.stringify(e.images)},`);
-    lines.push(`    dates: ${JSON.stringify(e.dates)},`);
-    if (e.blogSlug) lines.push(`    blogSlug: ${JSON.stringify(e.blogSlug)},`);
-    if (e.hidden) lines.push(`    hidden: true,`);
-    lines.push(`  },`);
-  }
-  lines.push(`];`, ``);
-  return lines.join("\n");
+interface Event {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  images: string[];
+  dates: string[];
+  blogSlug?: string;
+  hidden?: boolean;
+}
+
+function toJson(e: typeof events.$inferSelect): Event {
+  return {
+    id: e.id,
+    title: e.title,
+    description: e.description,
+    image: e.imageUrl,
+    images: e.imageUrls,
+    dates: e.dates,
+    blogSlug: e.blogSlug ?? undefined,
+    hidden: e.hidden,
+  };
 }
 
 export async function GET() {
-  guard();
-  return Response.json(events);
+  const err = guard();
+  if (err) return err;
+  const rows = await db.select().from(events).orderBy(asc(events.sortOrder));
+  return Response.json(rows.map(toJson));
 }
 
 export async function POST(req: NextRequest) {
-  guard();
-  const item = await req.json();
-  const list = [...events, item];
-  fs.writeFileSync(FILE, serialize(list));
+  const err = guard();
+  if (err) return err;
+  const item: Event = await req.json();
+  const existing = await db.select().from(events);
+  await db.insert(events).values({
+    id: item.id,
+    title: item.title,
+    description: item.description,
+    imageUrl: item.image,
+    imageUrls: item.images,
+    dates: item.dates,
+    blogSlug: item.blogSlug ?? null,
+    hidden: item.hidden ?? false,
+    sortOrder: existing.length,
+  });
   return Response.json({ ok: true });
 }
 
 export async function PUT(req: NextRequest) {
-  guard();
-  const item = await req.json();
-  const list = events.map((e) => (e.id === item.id ? item : e));
-  fs.writeFileSync(FILE, serialize(list));
+  const err = guard();
+  if (err) return err;
+  const item: Event = await req.json();
+  await db
+    .update(events)
+    .set({
+      title: item.title,
+      description: item.description,
+      imageUrl: item.image,
+      imageUrls: item.images,
+      dates: item.dates,
+      blogSlug: item.blogSlug ?? null,
+      hidden: item.hidden ?? false,
+    })
+    .where(eq(events.id, item.id));
   return Response.json({ ok: true });
 }
 
 export async function DELETE(req: NextRequest) {
-  guard();
+  const err = guard();
+  if (err) return err;
   const { id } = await req.json();
-  const list = events.filter((e) => e.id !== id);
-  fs.writeFileSync(FILE, serialize(list));
+  await db.delete(events).where(eq(events.id, id));
   return Response.json({ ok: true });
 }

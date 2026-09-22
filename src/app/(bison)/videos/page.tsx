@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FiExternalLink } from "react-icons/fi";
-import { videos } from "../../../data/videos";
+import { getVideos } from "../../../lib/videos";
 import { getLocale } from "../../../lib/locale";
 import { t } from "../../../lib/translations";
 import "../../../styles/videos.css";
@@ -10,7 +10,7 @@ function youtubeThumbnail(id: string) {
 }
 
 export default async function VideosPage() {
-  const locale = await getLocale();
+  const [locale, videos] = await Promise.all([getLocale(), getVideos()]);
   const tr = t(locale).videos;
 
   return (

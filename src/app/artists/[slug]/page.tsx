@@ -1,20 +1,26 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { artistProfiles } from "../../../data/artists";
-import { upcomingReleases, recentReleases } from "../../../data/releases";
+import { getArtists } from "../../../lib/artists";
+import { getUpcomingReleases, getRecentReleases } from "../../../lib/db";
 import { getLocale } from "../../../lib/locale";
 import "../../../styles/artist-profile.css";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const artistProfiles = await getArtists();
   return artistProfiles.map((a) => ({ slug: a.slug }));
 }
 
 export default async function ArtistProfilePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const [artistProfiles, locale, upcomingReleases, recentReleases] = await Promise.all([
+    getArtists(),
+    getLocale(),
+    getUpcomingReleases(),
+    getRecentReleases(),
+  ]);
   const artist = artistProfiles.find((a) => a.slug === slug);
   if (!artist) notFound();
 
-  const locale = await getLocale();
   const bio = artist.bio[locale];
 
   const nameLC = artist.name.toLowerCase();

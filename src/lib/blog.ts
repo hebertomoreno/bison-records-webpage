@@ -1,11 +1,9 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import { and, desc, eq } from "drizzle-orm";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
-
-const BLOG_DIR = path.join(process.cwd(), "content/blog");
+import { db } from "../db";
+import { blogPosts } from "../db/schema";
 
 export interface PostMeta {
   slug: string;
@@ -21,42 +19,51 @@ export interface Post extends PostMeta {
   content: string;
 }
 
-export function getAllPosts(): PostMeta[] {
-  if (!fs.existsSync(BLOG_DIR)) return [];
-  const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith(".md") && !/\.[a-z]{2}\.md$/.test(f));
+export async function getAllPosts(): Promise<PostMeta[]> {
+  const rows = await db
+    .select()
+    .from(blogPosts)
+    .where(and(eq(blogPosts.locale, "en"), eq(blogPosts.hidden, false)))
+    .orderBy(desc(blogPosts.date));
 
-  return files
-    .map((filename) => {
-      const slug = filename.replace(/\.md$/, "");
-      const raw = fs.readFileSync(path.join(BLOG_DIR, filename), "utf8");
-      const { data } = matter(raw);
-      return {
-        slug,
-        title: data.title ?? slug,
-        date: data.date ?? "",
-        author: data.author ?? "",
-        excerpt: data.excerpt ?? "",
-        image: data.image ?? undefined,
-        hidden: data.hidden === true || data.hidden === "true",
-      };
-    })
-    .filter((p) => !p.hidden)
-    .sort((a, b) => (a.date < b.date ? 1 : -1));
+  return rows.map((p) => ({
+    slug: p.slug,
+    title: p.title,
+    date: p.date,
+    author: p.author,
+    excerpt: p.excerpt ?? "",
+    image: p.imageUrl ?? undefined,
+    hidden: p.hidden,
+  }));
 }
 
 export async function getPost(slug: string, locale?: string): Promise<Post> {
-  const localePath = locale && locale !== "en" ? path.join(BLOG_DIR, `${slug}.${locale}.md`) : null;
-  const filePath = localePath && fs.existsSync(localePath) ? localePath : path.join(BLOG_DIR, `${slug}.md`);
-  const raw = fs.readFileSync(filePath, "utf8");
-  const { data, content } = matter(raw);
-  const processed = await remark().use(remarkGfm).use(remarkHtml, { sanitize: false }).process(content);
+  let row: typeof blogPosts.$inferSelect | undefined;
+
+  if (locale && locale !== "en") {
+    [row] = await db
+      .select()
+      .from(blogPosts)
+      .where(and(eq(blogPosts.slug, slug), eq(blogPosts.locale, locale)));
+  }
+
+  if (!row) {
+    [row] = await db
+      .select()
+      .from(blogPosts)
+      .where(and(eq(blogPosts.slug, slug), eq(blogPosts.locale, "en")));
+  }
+
+  if (!row) throw new Error(`Blog post not found: ${slug}`);
+
+  const processed = await remark().use(remarkGfm).use(remarkHtml, { sanitize: false }).process(row.content);
 
   return {
-    slug,
-    title: data.title ?? slug,
-    date: data.date ?? "",
-    author: data.author ?? "",
-    excerpt: data.excerpt ?? "",
+    slug: row.slug,
+    title: row.title,
+    date: row.date,
+    author: row.author,
+    excerpt: row.excerpt ?? "",
     content: processed.toString(),
   };
 }

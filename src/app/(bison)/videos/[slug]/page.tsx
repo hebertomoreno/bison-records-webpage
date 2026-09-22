@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { videos } from "../../../../data/videos";
+import { getVideos } from "../../../../lib/videos";
 import { getLocale } from "../../../../lib/locale";
 import { t } from "../../../../lib/translations";
 import "../../../../styles/videos.css";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const videos = await getVideos();
   return videos
     .filter((v) => v.type === "local")
     .map((v) => ({ slug: v.id }));
@@ -17,11 +18,11 @@ export default async function VideoDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const [videos, locale] = await Promise.all([getVideos(), getLocale()]);
   const video = videos.find((v) => v.id === slug && v.type === "local");
 
   if (!video) notFound();
 
-  const locale = await getLocale();
   const tr = t(locale);
   const isPortrait = video.id === "facesplaces";
 
@@ -37,8 +38,8 @@ export default async function VideoDetailPage({
         playsInline
         preload="metadata"
       >
-        <source src={`${video.file}.webm`} type="video/webm" />
-        <source src={`${video.file}-opt.mp4`} type="video/mp4" />
+        {video.fileWebmUrl && <source src={video.fileWebmUrl} type="video/webm" />}
+        {video.fileMp4Url && <source src={video.fileMp4Url} type="video/mp4" />}
       </video>
 
       <h1 className="video-detail__title">{video.title}</h1>

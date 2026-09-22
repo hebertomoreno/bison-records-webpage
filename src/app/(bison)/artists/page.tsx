@@ -2,24 +2,23 @@ import Link from "next/link";
 import "../../../styles/artists.css";
 import { getLocale } from "../../../lib/locale";
 import { t } from "../../../lib/translations";
-import { artistProfiles } from "../../../data/artists";
+import { getArtists } from "../../../lib/artists";
 
 const featured = [
   {
     name: "Nikolas Murdock",
     slug: "nikolas-murdock",
-    image: "/media/images/NikolasMurdockImage.jpg",
+    image: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/images/NikolasMurdockImage.jpg",
   },
 ];
 
-const artists = [
-  ...featured,
-  ...artistProfiles.map((a) => ({ name: a.name, slug: a.slug, image: a.image })),
-];
-
 export default async function ArtistsPage() {
-  const locale = await getLocale();
+  const [locale, artistProfiles] = await Promise.all([getLocale(), getArtists()]);
   const tr = t(locale);
+  const artists = [
+    ...featured,
+    ...artistProfiles.map((a) => ({ name: a.name, slug: a.slug, image: a.image })),
+  ];
   return (
     <div className="artists-page">
       <h1 className="artists-heading">{tr.artists.heading}</h1>

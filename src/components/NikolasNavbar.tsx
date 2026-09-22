@@ -21,7 +21,7 @@ export default function NikolasNavbar({ items, locale = "en" }: { items: NavItem
         <div className="nm-nav__brand-group">
           <a href="#hero" className="nm-nav__brand">
             <Image
-              src="/media/images/NikMDkLogo.png"
+              src="https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/images/NikMDkLogo.png"
               alt="Nikolas Murdock"
               height={82}
               width={200}

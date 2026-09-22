@@ -9,12 +9,13 @@
     "lint": "next lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "scan-audio": "node scripts/scan-audio.mjs",
-    "fetch-spotify": "node scripts/fetch-spotify.mjs",
-    "seed": "node scripts/seed.mjs"
+    "fetch-spotify": "node scripts/fetch-spotify.mjs"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
     "@tailwindcss/vite": "^4.1.11",
+    "@vercel/blob": "^2.8.0",
+    "drizzle-orm": "^0.45.3",
     "gray-matter": "^4.0.3",
     "next": "^16.2.1",
     "react": "19.1.0",
@@ -31,6 +32,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.21",
+    "drizzle-kit": "^0.31.11",
     "eslint": "^9",
     "eslint-config-next": "15.4.1",
     "eslint-config-prettier": "^10.1.8",

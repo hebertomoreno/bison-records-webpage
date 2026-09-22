@@ -24,7 +24,7 @@ export default async function Footer() {
         <div className="site-footer__brand">
           <Link href="/">
             <Image
-              src="/media/images/RecordsLogo.png"
+              src="https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/images/RecordsLogo.png"
               alt="Bison Records"
               width={160}
               height={55}
