@@ -7,7 +7,7 @@ import { t } from "../../../lib/translations";
 export default async function BlogPage() {
   const locale = await getLocale();
   const tr = t(locale);
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
 
   return (
     <div className="blog-page">

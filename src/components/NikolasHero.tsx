@@ -11,7 +11,7 @@ interface Slide {
 }
 
 const slides: Slide[] = [
-  { image: "/media/images/bear1.jpg" },
+  { image: "https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/images/bear1.jpg" },
   {
     image: "https://i.scdn.co/image/ab67616d0000b27353f72953082aeecbce08b090",
     label: "Single · 2021",

@@ -1,8 +1,7 @@
 import { NextRequest } from "next/server";
-import fs from "fs";
-import path from "path";
-
-const ARTISTS_FILE = path.join(process.cwd(), "src/data/artists.ts");
+import { asc, eq } from "drizzle-orm";
+import { db } from "../../../../db";
+import { artists } from "../../../../db/schema";
 
 function devOnly() {
   if (process.env.NODE_ENV !== "development") {
@@ -17,69 +16,45 @@ interface ArtistProfile {
   bio: { en: string; es: string };
 }
 
-function parseArtists(): ArtistProfile[] {
-  if (!fs.existsSync(ARTISTS_FILE)) return [];
-  const src = fs.readFileSync(ARTISTS_FILE, "utf8");
-  try {
-    const block = src.match(/export const artistProfiles[^=]*=\s*\[([\s\S]*)\];/)?.[1] ?? "";
-    const entries: ArtistProfile[] = [];
-    for (const m of block.matchAll(
-      /\{\s*slug:\s*"([^"]+)",\s*name:\s*"([^"]+)",\s*image:\s*"([^"]+)",\s*bio:\s*\{[\s\S]*?en:\s*`([^`]*)`[\s\S]*?es:\s*`([^`]*)`[\s\S]*?\},?\s*\}/g
-    )) {
-      entries.push({
-        slug: m[1],
-        name: m[2],
-        image: m[3],
-        bio: { en: m[4], es: m[5] },
-      });
-    }
-    return entries;
-  } catch {
-    return [];
-  }
-}
-
-function writeArtists(artists: ArtistProfile[]) {
-  const lines = [
-    `export interface ArtistProfile {`,
-    `  slug: string;`,
-    `  name: string;`,
-    `  image: string;`,
-    `  bio: { en: string; es: string };`,
-    `}`,
-    ``,
-    `export const artistProfiles: ArtistProfile[] = [`,
-  ];
-  for (const a of artists) {
-    lines.push(`  {`);
-    lines.push(`    slug: ${JSON.stringify(a.slug)},`);
-    lines.push(`    name: ${JSON.stringify(a.name)},`);
-    lines.push(`    image: ${JSON.stringify(a.image)},`);
-    lines.push(`    bio: {`);
-    lines.push(`      en: \`${a.bio.en.replace(/`/g, "\\`")}\`,`);
-    lines.push(`      es: \`${a.bio.es.replace(/`/g, "\\`")}\`,`);
-    lines.push(`    },`);
-    lines.push(`  },`);
-  }
-  lines.push(`];`, ``);
-  fs.writeFileSync(ARTISTS_FILE, lines.join("\n"));
+function toJson(a: typeof artists.$inferSelect): ArtistProfile {
+  return { slug: a.slug, name: a.name, image: a.imageUrl, bio: { en: a.bioEn, es: a.bioEs } };
 }
 
 export async function GET() {
   const err = devOnly();
   if (err) return err;
-  return Response.json(parseArtists());
+  const rows = await db.select().from(artists).orderBy(asc(artists.sortOrder));
+  return Response.json(rows.map(toJson));
 }
 
 export async function POST(req: NextRequest) {
   const err = devOnly();
   if (err) return err;
   const incoming: ArtistProfile = await req.json();
-  const artists = parseArtists();
-  const idx = artists.findIndex((a) => a.slug === incoming.slug);
-  if (idx >= 0) artists[idx] = incoming;
-  else artists.push(incoming);
-  writeArtists(artists);
+  const existing = await db.select().from(artists);
+  const sortOrder = existing.find((a) => a.slug === incoming.slug)?.sortOrder ?? existing.length;
+
+  await db
+    .insert(artists)
+    .values({
+      slug: incoming.slug,
+      name: incoming.name,
+      imageUrl: incoming.image,
+      bioEn: incoming.bio.en,
+      bioEs: incoming.bio.es,
+      sortOrder,
+    })
+    .onConflictDoUpdate({
+      target: artists.slug,
+      set: {
+        name: incoming.name,
+        imageUrl: incoming.image,
+        bioEn: incoming.bio.en,
+        bioEs: incoming.bio.es,
+        updatedAt: new Date(),
+      },
+    });
+
   return Response.json({ ok: true });
 }
 
@@ -87,7 +62,6 @@ export async function DELETE(req: NextRequest) {
   const err = devOnly();
   if (err) return err;
   const { slug } = await req.json();
-  const artists = parseArtists().filter((a) => a.slug !== slug);
-  writeArtists(artists);
+  await db.delete(artists).where(eq(artists.slug, slug));
   return Response.json({ ok: true });
 }

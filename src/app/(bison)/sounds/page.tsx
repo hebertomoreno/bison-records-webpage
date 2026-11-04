@@ -8,7 +8,7 @@ export default async function SoundsPage() {
   const locale = await getLocale();
   const tr = t(locale);
 
-  const tracks = getTracks().map((row) => ({
+  const tracks = (await getTracks()).map((row) => ({
     id: row.id,
     title: row.title,
     artist: row.artist ?? "",

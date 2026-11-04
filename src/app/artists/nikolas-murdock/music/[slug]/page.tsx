@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { albums } from "../../../../../data/albums";
-import { albumDetails } from "../../../../../data/album-details";
+import { getAlbumDetails } from "../../../../../lib/album-details";
 import "../../../../../styles/nikolas-murdock.css";
 import "../../../../../styles/album-detail.css";
 
@@ -14,6 +14,7 @@ export default async function AlbumDetailPage({ params }: { params: Promise<{ sl
   const album = albums.find((a) => a.spotifyId === slug);
   if (!album) notFound();
 
+  const albumDetails = await getAlbumDetails();
   const detail = albumDetails.find((d) => d.spotifyId === slug);
 
   return (

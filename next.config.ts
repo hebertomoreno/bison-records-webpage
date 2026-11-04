@@ -6,10 +6,11 @@ const csp = [
   `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}`,
   // Next.js injects inline styles
   "style-src 'self' 'unsafe-inline'",
-  // Spotify album art, YouTube thumbnails
-  "img-src 'self' data: https://i.scdn.co https://img.youtube.com",
-  // Local audio and video
-  "media-src 'self' blob:",
+  // Spotify album art, YouTube thumbnails, Vercel Blob-hosted images
+  "img-src 'self' data: https://i.scdn.co https://img.youtube.com https://*.public.blob.vercel-storage.com",
+  // Audio/video — 'blob:' is the browser object-URL scheme (duration probing), the
+  // vercel-storage.com host is where the actual files are hosted after migration
+  "media-src 'self' blob: https://*.public.blob.vercel-storage.com",
   // YouTube embeds on Nikolas Murdock page
   "frame-src https://www.youtube.com",
   // API calls from the browser (admin CMS)
@@ -27,10 +28,10 @@ const csp = [
 ].join("; ");
 
 const nextConfig: NextConfig = {
-  // The upload route accesses public/media at runtime via fs — without this,
-  // Next.js traces the entire 400MB media directory into the function bundle.
-  outputFileTracingExcludes: {
-    "/api/admin/upload": ["./public/media/**/*"],
+  images: {
+    remotePatterns: [
+      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" },
+    ],
   },
   async headers() {
     return [

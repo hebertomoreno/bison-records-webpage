@@ -48,7 +48,7 @@ export default function Navbar({ items, locale = "en" }: { items: NavItem[]; loc
         <Link href="/" className="navbar-logo">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/media/images/RecordsLogo.png"
+            src="https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/images/RecordsLogo.png"
             alt="Bison Records"
             width={180}
             height={82}
@@ -56,7 +56,7 @@ export default function Navbar({ items, locale = "en" }: { items: NavItem[]; loc
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/media/images/BRLogoHead.png"
+            src="https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/images/BRLogoHead.png"
             alt="Bison Records"
             width={48}
             height={48}

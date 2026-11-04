@@ -1,7 +1,7 @@
 import "../../../styles/nikolas-murdock.css";
 import Link from "next/link";
 import { albums } from "../../../data/albums";
-import { albumDetails } from "../../../data/album-details";
+import { getAlbumDetails } from "../../../lib/album-details";
 import { getArtistEvents, formatEventDate, type BandsintownEvent } from "../../../lib/bandsintown";
 import { getUpcomingReleases, getRecentReleases } from "../../../lib/db";
 import { getLocale } from "../../../lib/locale";
@@ -12,13 +12,18 @@ import NmPhotosGallery from "../../../components/NmPhotosGallery";
 const videoIds = ["R8bXtWE1x30", "JovUdt6bPMU"];
 
 export default async function NikolasMurdockPage() {
-  const locale = await getLocale();
+  const [locale, upcomingReleases, recentReleases, albumDetails] = await Promise.all([
+    getLocale(),
+    getUpcomingReleases(),
+    getRecentReleases(),
+    getAlbumDetails(),
+  ]);
   const tr = t(locale).nikolas;
 
-  const allUpcoming = getUpcomingReleases().filter((r) =>
+  const allUpcoming = upcomingReleases.filter((r) =>
     r.artist.toLowerCase().includes("nikolas murdock")
   );
-  const allRecent = getRecentReleases().filter((r) =>
+  const allRecent = recentReleases.filter((r) =>
     r.artist.toLowerCase().includes("nikolas murdock")
   );
 
@@ -147,7 +152,7 @@ export default async function NikolasMurdockPage() {
           <h2 className="nm-section__title">{tr.sections.about}</h2>
           <div className="nm-about-inner">
             <img
-              src="/media/images/NikolasMurdockImage.jpg"
+              src="https://wcmkzak0auav8rzo.public.blob.vercel-storage.com/images/NikolasMurdockImage.jpg"
               alt="Nikolas Murdock"
               className="nm-about__photo"
             />

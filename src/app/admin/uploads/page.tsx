@@ -40,8 +40,8 @@ export default function AdminUploads() {
         <div className="adm-field">
           <label>Destination</label>
           <select value={dest} onChange={(e) => setDest(e.target.value as "images" | "audio")}>
-            <option value="images">Images → public/media/images/</option>
-            <option value="audio">Audio → public/media/audio/</option>
+            <option value="images">Images → Blob (images/)</option>
+            <option value="audio">Audio → Blob (audio/)</option>
           </select>
         </div>
 

@@ -7,7 +7,8 @@ import "../styles/hero.css";
 
 export interface Slide {
   image?: string;
-  video?: string;
+  videoWebm?: string;
+  videoMp4?: string;
   logo?: string;
   artist?: string;
   title: string;
@@ -18,7 +19,15 @@ export interface Slide {
 
 const INTERVAL = 15000;
 
-function VideoSlide({ src, active }: { src: string; active: boolean }) {
+function VideoSlide({
+  webmSrc,
+  mp4Src,
+  active,
+}: {
+  webmSrc?: string;
+  mp4Src?: string;
+  active: boolean;
+}) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -42,8 +51,8 @@ function VideoSlide({ src, active }: { src: string; active: boolean }) {
       // Only eagerly load the first slide; everything else defers until active
       preload={active ? "auto" : "none"}
     >
-      <source src={`${src}.webm`} type="video/webm" />
-      <source src={`${src}-opt.mp4`} type="video/mp4" />
+      {webmSrc && <source src={webmSrc} type="video/webm" />}
+      {mp4Src && <source src={mp4Src} type="video/mp4" />}
     </video>
   );
 }
@@ -78,7 +87,9 @@ export default function Hero({ slides }: { slides: Slide[] }) {
           className={`hero-slide ${i === current ? "hero-slide--active" : ""}`}
           style={slide.image ? { backgroundImage: `url(${slide.image})` } : undefined}
         >
-          {slide.video && <VideoSlide src={slide.video} active={i === current} />}
+          {(slide.videoWebm || slide.videoMp4) && (
+            <VideoSlide webmSrc={slide.videoWebm} mp4Src={slide.videoMp4} active={i === current} />
+          )}
           <div className="hero-slide__overlay" />
           <div className="hero-content">
             {slide.artist && <p className="hero-artist">{slide.artist}</p>}

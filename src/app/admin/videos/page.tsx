@@ -46,7 +46,8 @@ interface Video {
   author: string;
   description: string;
   type: "local" | "youtube";
-  file?: string;
+  fileWebmUrl?: string;
+  fileMp4Url?: string;
   preview?: string;
   youtubeId?: string;
   hidden?: boolean;
@@ -58,7 +59,8 @@ const EMPTY: Video = {
   author: "",
   description: "",
   type: "youtube",
-  file: "",
+  fileWebmUrl: "",
+  fileMp4Url: "",
   preview: "",
   youtubeId: "",
 };
@@ -164,22 +166,28 @@ export default function AdminVideos() {
           ) : (
             <>
               <div className="adm-field">
-                <label>File path (no extension)</label>
-                <input value={editing.file ?? ""} onChange={(e) => set("file", e.target.value)} placeholder="/media/video/my-video" />
+                <label>WebM URL</label>
+                <input value={editing.fileWebmUrl ?? ""} onChange={(e) => set("fileWebmUrl", e.target.value)} placeholder="https://…blob.vercel-storage.com/video/my-video.webm" />
                 <FileDropzone
                   dest="video"
-                  accept="video/*"
-                  hint="MP4, WebM, MOV, MKV"
-                  onUploaded={(path) => {
-                    // Strip extension so the player can append .mp4 / .webm itself
-                    const withoutExt = path.replace(/\.[^/.]+$/, "");
-                    set("file", withoutExt);
-                  }}
+                  accept="video/webm"
+                  hint="WebM (VP9) — see CLAUDE.md for the ffmpeg export command"
+                  onUploaded={(path) => set("fileWebmUrl", path)}
                 />
               </div>
               <div className="adm-field">
-                <label>Preview GIF path</label>
-                <input value={editing.preview ?? ""} onChange={(e) => set("preview", e.target.value)} placeholder="/media/video/my-video-preview.gif" />
+                <label>MP4 URL</label>
+                <input value={editing.fileMp4Url ?? ""} onChange={(e) => set("fileMp4Url", e.target.value)} placeholder="https://…blob.vercel-storage.com/video/my-video-opt.mp4" />
+                <FileDropzone
+                  dest="video"
+                  accept="video/mp4"
+                  hint="MP4 (H.264) — see CLAUDE.md for the ffmpeg export command"
+                  onUploaded={(path) => set("fileMp4Url", path)}
+                />
+              </div>
+              <div className="adm-field">
+                <label>Preview GIF URL</label>
+                <input value={editing.preview ?? ""} onChange={(e) => set("preview", e.target.value)} placeholder="https://…blob.vercel-storage.com/video/my-video-preview.gif" />
                 <FileDropzone
                   dest="video"
                   accept="image/gif"
@@ -205,7 +213,7 @@ export default function AdminVideos() {
             <div key={v.id} className="adm-list-item">
               <div>
                 <div className="adm-list-item__title">{v.title}</div>
-                <div className="adm-list-item__meta">{v.author} · {v.type}{v.youtubeId ? ` · ${v.youtubeId}` : ""}{v.file ? ` · ${v.file}` : ""}</div>
+                <div className="adm-list-item__meta">{v.author} · {v.type}{v.youtubeId ? ` · ${v.youtubeId}` : ""}{v.fileWebmUrl || v.fileMp4Url ? " · uploaded" : ""}</div>
               </div>
               <div className="adm-list-item__actions">
                 <button className={`adm-btn ${v.hidden ? "adm-btn--danger" : "adm-btn--ghost"}`} onClick={() => toggleHidden(v)}>
